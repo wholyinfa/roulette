@@ -1,7 +1,7 @@
 $boxD: 85px;
 
 $rouletteH: $boxD * 5;
-$borderW: 3px;
+$borderW: 4px;
 #rouletteTable{
     width: $boxD * 13 + 100;
     height: $rouletteH;
@@ -25,7 +25,7 @@ $borderW: 3px;
     }
     button:hover{
         cursor: pointer;
-        background: red;
+        background: red !important;
     }
     .split{
         width: 100%;
@@ -39,7 +39,6 @@ $borderW: 3px;
     #zeros{
         width: 60px;
         height: $boxD * 3;
-        padding-left: 10px;
         > div{
             $height: ($boxD * 3)  / 2; 
             height: $height;
@@ -47,12 +46,12 @@ $borderW: 3px;
             position: relative;
             box-sizing: border-box;
             .straight{
-                width: 65px;
-                height: 65px;
-                background: #1B5E20;
+                width: 60px;
+                height: 60px;
                 border-radius: 125px;
                 border: 2px solid #fff;
                 line-height: normal;
+                margin-left: 5px;
             }
             .split{
                 position: absolute;
@@ -66,7 +65,7 @@ $borderW: 3px;
         #N00::after, #N00::before{
             content: '';
             width: $borderW;
-            height: 57.2%;
+            height: 57.5%;
             background: #fff;
             position: absolute;
             right: -1px;
@@ -81,6 +80,83 @@ $borderW: 3px;
             transform: rotate(25deg);
             transform-origin: bottom;
         }
+    }
+    #inside{
+        .row{
+            float: right;
+        }
+        .row > *{
+            width: $boxD;
+            height: $boxD;
+            line-height: $boxD;
+            text-align: center;
+            position: relative;
+            > .straight{
+                width: 55px;
+                height: 55px;
+                border-radius: 100px;
+            }
+            > *:not(.straight){
+                position: absolute;
+                background: #fff;
+            }
+            .right, .left, .split0, .split00{
+                width: $borderW;
+                height: 100%;
+            }
+            .right{
+                right: 0;
+                top: 0;
+            }
+            .left{
+                left: 0;
+                top: 0;
+            }
+            .split0, .split00{
+                height: 50%;
+                right: 0;
+            }
+            .split0{
+                top: 0;
+            }
+            .split00{
+                bottom: 0;
+            }
+            .bottom, .street{
+                height: $borderW;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+            }
+            .basket, .trio, .topLine{
+                width: $borderW;
+                height: $borderW;
+                top: 50%;
+                transform: translateY(-100%);
+                right: 0;
+                z-index: 5;
+            }
+            .basket{
+                transform: translateY(-50%);
+            }
+            .topLine{
+                top: 100%;
+            }
+            .corner, .dbStreet{
+                width: $borderW;
+                height: $borderW;
+                bottom: 0;
+                left: 0;
+                z-index: 5;
+            }
+        }
+        #N1 > .trio{
+            top: 100%;
+        }
+        #N3 > .trio{
+            top: 0;
+        }
+
     }
     #outsideBottom{
         width: 100%;

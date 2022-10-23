@@ -10,47 +10,76 @@ const colors = {
   gold: '#F9A825'
 }
 
+type betColor = 'green' | 'red' | 'black';
+interface idNumbers{
+  number: number,
+  color: betColor
+}
 function Table({numbers}: InferProps<typeof Table.propTypes>) {
+  let groupedNumbers: idNumbers[][] = [];
 
+  let I = 0;
+  let numberRow: idNumbers[] = [];
+  for ( let i = 1; i <= numbers.length; i++ ){
+    numberRow.push(numbers[i - 1]);
+    if ( i % 3 === 0 ) {
+      groupedNumbers.push(numberRow);
+      numberRow = [];
+      I++;
+    };
+  }
+  console.log(groupedNumbers);
   return <div id='rouletteTable'>
     <div id='zeros'>
       <div id='N0'>
-        <button className='straight'>0</button>
+        <button className='straight' style={{backgroundColor: colors.green}}>0</button>
         <button className='split'></button>
       </div>
       <div id='N00'>
-        <button className='straight'>00</button>
+        <button className='straight' style={{backgroundColor: colors.green}}>00</button>
       </div>
     </div>
     <div id='inside'>
       {
-        numbers.map( (number, i) => {
-          return <div
-            id={`N${number}`}
-            key={i}
-          >
-            <button className='straight'>{number}</button>
-            <button className={ ( i % 3 === 0 ) ? 'street' : 'bottom'}></button>
-            { 
-            ( number === 1 || number === 3 ) ?
-              <button className='right'></button> :
-            ( number === 2 ) ? <>
-                <button className='split0'></button> 
-                <button className='basket'></button> 
-                <button className='split00'></button>
-              </> : ''
-            }
-            {
-              ( number !== 34 && number !== 35 && number !== 36 ) ?<>
-                <button className={ ( i % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
-                <button className='left'></button>
-              </>: ''
-            }
-            {
-              ( number === 1 && number === 2 && number === 3 ) ?
-              <button className={ (number === 1) ? 'topLine' : 'trio'}></button> : ''
-            }
-            </div>;
+        groupedNumbers.map( (numbers, i) => {
+          return <div className='row' key={i}>
+          {
+            numbers.map( (idNumber, ii) => {
+              const num = idNumber.number;
+              return <div
+                id={`N${num}`}
+                key={ii}
+              >
+                <button className='straight' style={{backgroundColor: colors[idNumber.color]}}>{num}</button>
+                <button className={ ( num % 3 === 0 ) ? 'street' : 'bottom'}></button>
+                { 
+                ( num === 1 || num === 3 ) ?
+                  <button className='right'></button> :
+                ( num === 2 ) ? <>
+                    <button className='split0'></button> 
+                    <button className='basket'></button> 
+                    <button className='split00'></button>
+                  </> : ''
+                }
+                {
+                  ( num !== 34 && num !== 35 && num !== 36 ) ?<>
+                    <button className={ ( ii % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
+                    <button className='left'></button>
+                  </>: ''
+                }
+                {
+                  ( num === 1 ) ?
+                  <button className={'trio'}></button> : ''
+                }
+                {
+                  ( num === 3 ) ? <>
+                  <button className={'topLine'}></button>
+                  <button className={'trio'}></button></> : ''
+                }
+                </div>;
+            })
+          }
+          </div>
         })
       }
     </div>
@@ -158,7 +187,6 @@ function App() {
     setPrizeNumber(newPrizeNumber)
     setMustSpin(true);
   }
-  type betColor = 'green' | 'red' | 'black';
   const [betColor, setBetColor] = useState<betColor | null>(null);
   const handleStop = () => {
     setMustSpin(false);
@@ -172,11 +200,16 @@ function App() {
       setBetColor('green');
   }
 
-  const tableNumbers = Array.from(
-    data.filter(t => Number(t.option) !== 0),
-    i => Number(i.option))
+  const idNumbers: idNumbers[] = data.map( (n , i) => ({
+    number: Number(n.option),
+    color: ( i % 2 === 0 ) ? 'black' : 'red'
+  }))
+
+  const tableNumbers: idNumbers[] = Array.from(
+    idNumbers.filter(t => Number(t.number) !== 0),
+    i => i)
   .sort(
-    (a, b) => a - b
+    (a, b) => a.number - b.number
     )
   return <>
        <Wheel 

@@ -4,9 +4,9 @@
   position: relative;
   margin: 0 auto;
   text-align: center;
-  border-top: 3px solid #fff;
-  border-bottom: 3px solid #fff;
-  border-left: 3px solid #fff;
+  border-top: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  border-left: 4px solid #fff;
   border-radius: 10px 0 0 10px;
 }
 #rouletteTable > * {
@@ -22,11 +22,11 @@
 }
 #rouletteTable button:hover {
   cursor: pointer;
-  background: red;
+  background: red !important;
 }
 #rouletteTable .split {
   width: 100%;
-  height: 3px;
+  height: 4px;
   background: #fff;
   display: block;
   z-index: 2;
@@ -35,7 +35,6 @@
 #rouletteTable #zeros {
   width: 60px;
   height: 255px;
-  padding-left: 10px;
 }
 #rouletteTable #zeros > div {
   height: 127.5px;
@@ -44,25 +43,25 @@
   box-sizing: border-box;
 }
 #rouletteTable #zeros > div .straight {
-  width: 65px;
-  height: 65px;
-  background: #1B5E20;
+  width: 60px;
+  height: 60px;
   border-radius: 125px;
   border: 2px solid #fff;
   line-height: normal;
+  margin-left: 5px;
 }
 #rouletteTable #zeros > div .split {
   position: absolute;
-  bottom: -1.5px;
+  bottom: -2px;
 }
 #rouletteTable #zeros #N00 {
-  border-bottom: 3px solid #fff;
+  border-bottom: 4px solid #fff;
 }
 #rouletteTable #zeros #N0::after, #rouletteTable #zeros #N0::before,
 #rouletteTable #zeros #N00::after, #rouletteTable #zeros #N00::before {
   content: "";
-  width: 3px;
-  height: 57.2%;
+  width: 4px;
+  height: 57.5%;
   background: #fff;
   position: absolute;
   right: -1px;
@@ -76,6 +75,80 @@
   bottom: -2px;
   transform: rotate(25deg);
   transform-origin: bottom;
+}
+#rouletteTable #inside .row {
+  float: right;
+}
+#rouletteTable #inside .row > * {
+  width: 85px;
+  height: 85px;
+  line-height: 85px;
+  text-align: center;
+  position: relative;
+}
+#rouletteTable #inside .row > * > .straight {
+  width: 55px;
+  height: 55px;
+  border-radius: 100px;
+}
+#rouletteTable #inside .row > * > *:not(.straight) {
+  position: absolute;
+  background: #fff;
+}
+#rouletteTable #inside .row > * .right, #rouletteTable #inside .row > * .left, #rouletteTable #inside .row > * .split0, #rouletteTable #inside .row > * .split00 {
+  width: 4px;
+  height: 100%;
+}
+#rouletteTable #inside .row > * .right {
+  right: 0;
+  top: 0;
+}
+#rouletteTable #inside .row > * .left {
+  left: 0;
+  top: 0;
+}
+#rouletteTable #inside .row > * .split0, #rouletteTable #inside .row > * .split00 {
+  height: 50%;
+  right: 0;
+}
+#rouletteTable #inside .row > * .split0 {
+  top: 0;
+}
+#rouletteTable #inside .row > * .split00 {
+  bottom: 0;
+}
+#rouletteTable #inside .row > * .bottom, #rouletteTable #inside .row > * .street {
+  height: 4px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+#rouletteTable #inside .row > * .basket, #rouletteTable #inside .row > * .trio, #rouletteTable #inside .row > * .topLine {
+  width: 4px;
+  height: 4px;
+  top: 50%;
+  transform: translateY(-100%);
+  right: 0;
+  z-index: 5;
+}
+#rouletteTable #inside .row > * .basket {
+  transform: translateY(-50%);
+}
+#rouletteTable #inside .row > * .topLine {
+  top: 100%;
+}
+#rouletteTable #inside .row > * .corner, #rouletteTable #inside .row > * .dbStreet {
+  width: 4px;
+  height: 4px;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+}
+#rouletteTable #inside #N1 > .trio {
+  top: 100%;
+}
+#rouletteTable #inside #N3 > .trio {
+  top: 0;
 }
 #rouletteTable #outsideBottom {
   width: 100%;
