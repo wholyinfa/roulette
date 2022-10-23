@@ -12,7 +12,7 @@
 #rouletteTable > * {
   float: right;
 }
-#rouletteTable button, #rouletteTable #outsideLeft > * button::after {
+#rouletteTable button {
   background: none;
   border: none;
   text-decoration: none;
@@ -20,7 +20,7 @@
   font-size: 2em;
   padding: 0;
 }
-#rouletteTable button:hover, #rouletteTable #outsideLeft > * button:hover::after {
+#rouletteTable button:hover {
   cursor: pointer;
 }
 #rouletteTable .split {
@@ -162,7 +162,7 @@
   font-size: 0.4em;
   box-sizing: border-box;
 }
-#rouletteTable #outsideLeft > * button, #rouletteTable #outsideLeft > * button::after {
+#rouletteTable #outsideLeft .diamondButton, #rouletteTable #outsideLeft .diamondButton::after {
   background-image: url("./Assets/diamondButton.svg");
   background-position: center;
   background-repeat: no-repeat;
@@ -172,7 +172,7 @@
   transition: 0.1s all ease-in-out;
   position: relative;
 }
-#rouletteTable #outsideLeft > * button::after {
+#rouletteTable #outsideLeft .diamondButton::after {
   content: "";
   width: 100%;
   height: 100%;
@@ -183,9 +183,52 @@
   opacity: 0;
   padding: 0;
 }
-#rouletteTable #outsideLeft > * button:hover::after {
+#rouletteTable #outsideLeft .diamondButton:hover::after {
   opacity: 0.3;
 }
 #rouletteTable #outsideBottom {
   width: 100%;
+}
+#rouletteTable #outsideBottom > * {
+  float: right;
+  font-size: 0.8em;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom #dozens {
+  width: 1105px;
+  margin-right: 60px;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom #dozens > * {
+  float: right;
+  width: 368.3333333333px;
+  height: 85px;
+  line-height: 85px;
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom .diamondButton, #rouletteTable #outsideBottom .diamondButton::after {
+  background-image: url("./Assets/diamondButton.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 0.3em 1em;
+  white-space: nowrap;
+  transition: 0.1s all ease-in-out;
+  position: relative;
+}
+#rouletteTable #outsideBottom .diamondButton::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("./Assets/diamondButtonFilled.svg");
+  opacity: 0;
+  padding: 0;
+}
+#rouletteTable #outsideBottom .diamondButton:hover::after {
+  opacity: 0.3;
 }/*# sourceMappingURL=App.css.map */
