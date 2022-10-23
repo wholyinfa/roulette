@@ -39,9 +39,9 @@ $mainFrame: $boxD * 13;
     margin: 0 auto;
     text-align: center;
     border-top: $borderW solid #fff;
-    border-bottom: $borderW solid #fff;
     border-left: $borderW solid #fff;
     border-radius: 10px 0 0 10px;
+    box-sizing: border-box;
     > *{
         float: right;
     }
@@ -188,7 +188,7 @@ $mainFrame: $boxD * 13;
 
     }
     #outsideLeft{
-        width: $boxD;
+        width: $boxD - $borderW;
         height: $boxD * 3;
         > *{
             border-right: $borderW solid #fff;
@@ -220,6 +220,28 @@ $mainFrame: $boxD * 13;
                 border-right: $borderW solid #fff;
                 border-bottom: $borderW solid #fff;
                 box-sizing: border-box;
+            }
+        }
+        #evens{
+            width: $mainFrame;
+            margin-right: $zerosW;
+            box-sizing: border-box;
+            > *{
+                float: right;
+                width: $mainFrame / 6;
+                height: $boxD;
+                line-height: $boxD;
+                border-right: $borderW solid #fff;
+                border-bottom: $borderW solid #fff;
+                box-sizing: border-box;
+            }
+            #F19TO36{
+                border-left: $borderW solid #fff;
+                border-bottom: $borderW solid #fff;
+                border-radius: 0 0 0 10px;
+            }
+            #F1TO18{
+                border-radius: 0 0 10px 0;
             }
         }
         @include diamondButton;

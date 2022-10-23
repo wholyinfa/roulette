@@ -106,23 +106,25 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
           <button className='diamondButton'>3RD 12</button>
         </div>
       </div>
-      <div id='1TO18'>
-        <button>1 TO 18</button>
-      </div>
-      <div id='even'>
-        <button>EVEN</button>
-      </div>
-      <div id='red'>
-        <button>RED</button>
-      </div>
-      <div id='black'>
-        <button>BLACK</button>
-      </div>
-      <div id='odd'>
-        <button>ODD</button>
-      </div>
-      <div id='19TO36'>
-        <button>19 TO 36</button>
+      <div id='evens'>
+        <div id='F1TO18'>
+          <button className='diamondButton'>1 TO 18</button>
+        </div>
+        <div id='even'>
+          <button className='diamondButton'>EVEN</button>
+        </div>
+        <div id='red'>
+          <button className='diamondButton'>RED</button>
+        </div>
+        <div id='black'>
+          <button className='diamondButton'>BLACK</button>
+        </div>
+        <div id='odd'>
+          <button className='diamondButton'>ODD</button>
+        </div>
+        <div id='F19TO36'>
+          <button className='diamondButton'>19 TO 36</button>
+        </div>
       </div>
     </div>
   </div>;

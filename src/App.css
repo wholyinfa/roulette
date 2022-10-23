@@ -5,9 +5,9 @@
   margin: 0 auto;
   text-align: center;
   border-top: 4px solid #fff;
-  border-bottom: 4px solid #fff;
   border-left: 4px solid #fff;
   border-radius: 10px 0 0 10px;
+  box-sizing: border-box;
 }
 #rouletteTable > * {
   float: right;
@@ -150,7 +150,7 @@
   top: 0;
 }
 #rouletteTable #outsideLeft {
-  width: 85px;
+  width: 81px;
   height: 255px;
 }
 #rouletteTable #outsideLeft > * {
@@ -207,6 +207,28 @@
   border-right: 4px solid #fff;
   border-bottom: 4px solid #fff;
   box-sizing: border-box;
+}
+#rouletteTable #outsideBottom #evens {
+  width: 1105px;
+  margin-right: 60px;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom #evens > * {
+  float: right;
+  width: 184.1666666667px;
+  height: 85px;
+  line-height: 85px;
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom #evens #F19TO36 {
+  border-left: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  border-radius: 0 0 0 10px;
+}
+#rouletteTable #outsideBottom #evens #F1TO18 {
+  border-radius: 0 0 10px 0;
 }
 #rouletteTable #outsideBottom .diamondButton, #rouletteTable #outsideBottom .diamondButton::after {
   background-image: url("./Assets/diamondButton.svg");
