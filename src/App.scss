@@ -1,0 +1,40 @@
+$boxD: 85px;
+
+$rouletteH: $boxD * 5;
+$borderW: 3px;
+#rouletteTable{
+    width: $boxD * 13 + 100;
+    height: $rouletteH;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    border-top: $borderW solid #fff;
+    border-bottom: $borderW solid #fff;
+    border-left: $borderW solid #fff;
+    border-radius: 10px 0 0 10px;
+    > *{
+        float: right;
+    }
+    button{
+        background: none;
+        border: none;
+        text-decoration: none;
+        color: #fff;
+        font-size: 2em;
+    }
+    button:hover{
+        cursor: pointer;
+        background: red;
+    }
+    .split{
+        width: 100%;
+        height: $borderW;
+        background: #fff;
+        display: block;
+        z-index: 2;
+        box-sizing: border-box;
+    }
+    #outsideBottom{
+        width: 100%;
+    }
+}

@@ -1,1 +1,36 @@
-/*# sourceMappingURL=App.css.map */
+#rouletteTable {
+  width: 1205px;
+  height: 425px;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  border-left: 3px solid #fff;
+  border-radius: 10px 0 0 10px;
+}
+#rouletteTable > * {
+  float: right;
+}
+#rouletteTable button {
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #fff;
+  font-size: 2em;
+}
+#rouletteTable button:hover {
+  cursor: pointer;
+  background: red;
+}
+#rouletteTable .split {
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  display: block;
+  z-index: 2;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideBottom {
+  width: 100%;
+}/*# sourceMappingURL=App.css.map */

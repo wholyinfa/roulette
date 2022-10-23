@@ -54,7 +54,7 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
         })
       }
     </div>
-    <div id='columns'>
+    <div id='outsideLeft'>
       <div id='COL1'>
         <button>2 TO 1</button>
       </div>
@@ -65,7 +65,7 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
         <button>2 TO 1</button>
       </div>
     </div>
-    <div id='evens'>
+    <div id='outsideBottom'>
       <div id='D1'>
         <button>1ST 12</button>
       </div>
