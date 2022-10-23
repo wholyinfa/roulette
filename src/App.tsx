@@ -2,12 +2,104 @@ import './App.css';
 import { Wheel } from 'react-custom-roulette';
 import React, { useState } from 'react';
 import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
+import PropTypes, {InferProps} from 'prop-types';
 const colors = {
   green: '#1B5E20',
   black: '#212121',
   red: '#B71C1C',
   gold: '#F9A825'
 }
+
+function Table({numbers}: InferProps<typeof Table.propTypes>) {
+
+  return <div id='rouletteTable'>
+    <div id='zeros'>
+      <div id='N0'>
+        <button className='straight'>0</button>
+        <button className='split'></button>
+      </div>
+      <div id='N00'>
+        <button className='straight'>00</button>
+      </div>
+    </div>
+    <div id='inside'>
+      {
+        numbers.map( (number, i) => {
+          return <div
+            id={`N${number}`}
+            key={i}
+          >
+            <button className='straight'>{number}</button>
+            <button className={ ( i % 3 === 0 ) ? 'street' : 'bottom'}></button>
+            { 
+            ( number === 1 || number === 3 ) ?
+              <button className='right'></button> :
+            ( number === 2 ) ? <>
+                <button className='split0'></button> 
+                <button className='basket'></button> 
+                <button className='split00'></button>
+              </> : ''
+            }
+            {
+              ( number !== 34 && number !== 35 && number !== 36 ) ?<>
+                <button className={ ( i % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
+                <button className='left'></button>
+              </>: ''
+            }
+            {
+              ( number === 1 && number === 2 && number === 3 ) ?
+              <button className={ (number === 1) ? 'topLine' : 'trio'}></button> : ''
+            }
+            </div>;
+        })
+      }
+    </div>
+    <div id='columns'>
+      <div id='COL1'>
+        <button>2 TO 1</button>
+      </div>
+      <div id='COL2'>
+        <button>2 TO 1</button>
+      </div>
+      <div id='COL3'>
+        <button>2 TO 1</button>
+      </div>
+    </div>
+    <div id='evens'>
+      <div id='D1'>
+        <button>1ST 12</button>
+      </div>
+      <div id='D2'>
+        <button>2ND 12</button>
+      </div>
+      <div id='D3'>
+        <button>3RD 12</button>
+      </div>
+      <div id='1TO18'>
+        <button>1 TO 18</button>
+      </div>
+      <div id='even'>
+        <button>EVEN</button>
+      </div>
+      <div id='red'>
+        <button>RED</button>
+      </div>
+      <div id='black'>
+        <button>BLACK</button>
+      </div>
+      <div id='odd'>
+        <button>ODD</button>
+      </div>
+      <div id='19TO36'>
+        <button>19 TO 36</button>
+      </div>
+    </div>
+  </div>;
+}
+Table.propTypes = {
+  numbers: PropTypes.array.isRequired
+}
+
 
 function App() {
   const data : Array<WheelData> = [
@@ -80,8 +172,13 @@ function App() {
       setBetColor('green');
   }
 
-  return (
-    <>
+  const tableNumbers = Array.from(
+    data.filter(t => Number(t.option) !== 0),
+    i => Number(i.option))
+  .sort(
+    (a, b) => a - b
+    )
+  return <>
        <Wheel 
         mustStartSpinning={mustSpin}
         prizeNumber={prizeNumber}
@@ -99,8 +196,10 @@ function App() {
       <button onClick={handleSpinClick}>
         SPIN
       </button>
-    </>
-  );
+      <Table
+        numbers={tableNumbers}
+      />
+    </>;
 }
 
 export default App;
