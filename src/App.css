@@ -31,6 +31,46 @@
   z-index: 2;
   box-sizing: border-box;
 }
+#rouletteTable #zeros {
+  width: 90px;
+  height: 425px;
+}
+#rouletteTable #zeros > div {
+  height: 212.5px;
+  line-height: 212.5px;
+  position: relative;
+  box-sizing: border-box;
+}
+#rouletteTable #zeros > div .straight {
+  width: 75px;
+  height: 75px;
+  background: #1B5E20;
+  border-radius: 125px;
+  border: 2px solid #fff;
+}
+#rouletteTable #zeros #N0 .split, #rouletteTable #zeros #N00 .split {
+  position: relative;
+  bottom: 0;
+}
+#rouletteTable #zeros #N0::after, #rouletteTable #zeros #N0::before,
+#rouletteTable #zeros #N00::after, #rouletteTable #zeros #N00::before {
+  content: "";
+  width: 3px;
+  height: 53%;
+  background: #fff;
+  position: absolute;
+  right: -1px;
+}
+#rouletteTable #zeros #N0::after, #rouletteTable #zeros #N00::after {
+  top: -2px;
+  transform: rotate(-15deg);
+  transform-origin: top;
+}
+#rouletteTable #zeros #N0::before, #rouletteTable #zeros #N00::before {
+  bottom: -2px;
+  transform: rotate(15deg);
+  transform-origin: bottom;
+}
 #rouletteTable #outsideBottom {
   width: 100%;
 }/*# sourceMappingURL=App.css.map */

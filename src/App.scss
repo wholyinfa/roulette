@@ -34,6 +34,49 @@ $borderW: 3px;
         z-index: 2;
         box-sizing: border-box;
     }
+
+    #zeros{
+        width: 90px;
+        height: $rouletteH;
+        > div{
+            height: $rouletteH / 2;
+            line-height: $rouletteH / 2;
+            position: relative;
+            box-sizing: border-box;
+            .straight{
+                width: 75px;
+                height: 75px;
+                background: #1B5E20;
+                border-radius: 125px;
+                border: 2px solid #fff;
+            }
+        }
+        #N0, #N00{
+            .split{
+                position: relative;
+                bottom: 0;
+            }
+        }
+        #N0::after, #N0::before,
+        #N00::after, #N00::before{
+            content: '';
+            width: $borderW;
+            height: 53%;
+            background: #fff;
+            position: absolute;
+            right: -1px;
+        }
+        #N0::after, #N00::after{
+            top: -2px;
+            transform: rotate(-15deg);
+            transform-origin: top;
+        }
+        #N0::before, #N00::before{
+            bottom: -2px;
+            transform: rotate(15deg);
+            transform-origin: bottom;
+        }
+    }
     #outsideBottom{
         width: 100%;
     }
