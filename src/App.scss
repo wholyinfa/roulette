@@ -21,6 +21,7 @@ $borderW: 3px;
         text-decoration: none;
         color: #fff;
         font-size: 2em;
+        padding: 0;
     }
     button:hover{
         cursor: pointer;
@@ -36,44 +37,48 @@ $borderW: 3px;
     }
 
     #zeros{
-        width: 90px;
-        height: $rouletteH;
+        width: 60px;
+        height: $boxD * 3;
+        padding-left: 10px;
         > div{
-            height: $rouletteH / 2;
-            line-height: $rouletteH / 2;
+            $height: ($boxD * 3)  / 2; 
+            height: $height;
+            line-height: $height + 10;
             position: relative;
             box-sizing: border-box;
             .straight{
-                width: 75px;
-                height: 75px;
+                width: 65px;
+                height: 65px;
                 background: #1B5E20;
                 border-radius: 125px;
                 border: 2px solid #fff;
+                line-height: normal;
+            }
+            .split{
+                position: absolute;
+                bottom: -$borderW/2;
             }
         }
-        #N0, #N00{
-            .split{
-                position: relative;
-                bottom: 0;
-            }
+        #N00{
+            border-bottom: $borderW solid #fff;
         }
         #N0::after, #N0::before,
         #N00::after, #N00::before{
             content: '';
             width: $borderW;
-            height: 53%;
+            height: 57.2%;
             background: #fff;
             position: absolute;
             right: -1px;
         }
         #N0::after, #N00::after{
             top: -2px;
-            transform: rotate(-15deg);
+            transform: rotate(-25deg);
             transform-origin: top;
         }
         #N0::before, #N00::before{
             bottom: -2px;
-            transform: rotate(15deg);
+            transform: rotate(25deg);
             transform-origin: bottom;
         }
     }
