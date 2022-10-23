@@ -1,5 +1,5 @@
 #rouletteTable {
-  width: 1205px;
+  width: 1165px;
   height: 425px;
   position: relative;
   margin: 0 auto;
@@ -12,7 +12,7 @@
 #rouletteTable > * {
   float: right;
 }
-#rouletteTable button {
+#rouletteTable button, #rouletteTable #outsideLeft > * button::after {
   background: none;
   border: none;
   text-decoration: none;
@@ -20,9 +20,8 @@
   font-size: 2em;
   padding: 0;
 }
-#rouletteTable button:hover {
+#rouletteTable button:hover, #rouletteTable #outsideLeft > * button:hover::after {
   cursor: pointer;
-  background: red !important;
 }
 #rouletteTable .split {
   width: 100%;
@@ -149,6 +148,43 @@
 }
 #rouletteTable #inside #N3 > .trio {
   top: 0;
+}
+#rouletteTable #outsideLeft {
+  width: 85px;
+  height: 255px;
+}
+#rouletteTable #outsideLeft > * {
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  height: 85px;
+  line-height: 85px;
+  width: 100%;
+  font-size: 0.4em;
+  box-sizing: border-box;
+}
+#rouletteTable #outsideLeft > * button, #rouletteTable #outsideLeft > * button::after {
+  background-image: url("./Assets/diamondButton.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 0.3em 1em;
+  white-space: nowrap;
+  transition: 0.1s all ease-in-out;
+  position: relative;
+}
+#rouletteTable #outsideLeft > * button::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("./Assets/diamondButtonFilled.svg");
+  opacity: 0;
+  padding: 0;
+}
+#rouletteTable #outsideLeft > * button:hover::after {
+  opacity: 0.3;
 }
 #rouletteTable #outsideBottom {
   width: 100%;
