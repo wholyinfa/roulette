@@ -6,7 +6,7 @@ const colors = {
   green: '#1B5E20',
   black: '#212121',
   red: '#B71C1C',
-  gold: '#F57F17'
+  gold: '#F9A825'
 }
 
 function App() {
@@ -61,6 +61,7 @@ function App() {
   const [prizeNumber, setPrizeNumber] = useState(0);
 
   const handleSpinClick = () => {
+    if ( mustSpin !== false ) return;
     const newPrizeNumber = Math.floor(Math.random() * data.length)
     setPrizeNumber(newPrizeNumber)
     setMustSpin(true);
