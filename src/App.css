@@ -23,6 +23,16 @@
 #rouletteTable button:hover {
   cursor: pointer;
 }
+#rouletteTable .left, #rouletteTable .topLine, #rouletteTable .right, #rouletteTable .bottom,
+#rouletteTable .split, #rouletteTable .split0, #rouletteTable .split00, #rouletteTable .trio,
+#rouletteTable .street, #rouletteTable .dbStreet, #rouletteTable .corner, #rouletteTable .basket {
+  transition: all 0.1s ease-in-out;
+}
+#rouletteTable .left:hover, #rouletteTable .topLine:hover, #rouletteTable .right:hover, #rouletteTable .bottom:hover,
+#rouletteTable .split:hover, #rouletteTable .split0:hover, #rouletteTable .split00:hover, #rouletteTable .trio:hover,
+#rouletteTable .street:hover, #rouletteTable .dbStreet:hover, #rouletteTable .corner:hover, #rouletteTable .basket:hover {
+  background-color: red !important;
+}
 #rouletteTable .split {
   width: 100%;
   height: 4px;
@@ -48,6 +58,25 @@
   border: 2px solid #fff;
   line-height: normal;
   margin-left: 5px;
+  position: relative;
+}
+#rouletteTable #zeros > div .straight::after {
+  content: "";
+  width: 60px;
+  height: 60px;
+  border-radius: 125px;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+#rouletteTable #zeros > div .straight:hover::after {
+  opacity: 0.3;
 }
 #rouletteTable #zeros > div .split {
   position: absolute;
@@ -89,6 +118,28 @@
   width: 55px;
   height: 55px;
   border-radius: 100px;
+  position: relative;
+  top: 4px;
+  left: 4px;
+}
+#rouletteTable #inside .row > * > .straight::after {
+  content: "";
+  width: 55px;
+  height: 55px;
+  border-radius: 125px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+  transform: translate(-50%, -50%);
+}
+#rouletteTable #inside .row > * > .straight:hover::after {
+  opacity: 0.3;
 }
 #rouletteTable #inside .row > * > *:not(.straight) {
   position: absolute;
@@ -295,7 +346,7 @@
   visibility: hidden;
 }
 #rouletteTable #outsideBottom #evens .theRedBlack:hover + .diamond {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 #rouletteTable #outsideBottom .diamondButton, #rouletteTable #outsideBottom .diamondButton::after {
   background-image: url("./Assets/diamondButton.svg");

@@ -63,7 +63,7 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
                 }
                 {
                   ( num !== 34 && num !== 35 && num !== 36 ) ?<>
-                    <button className={ ( ii % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
+                    <button className={ ( num % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
                     <button className='left'></button>
                   </>: ''
                 }
