@@ -114,10 +114,22 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
           <button className='diamondButton'>EVEN</button>
         </div>
         <div id='red'>
-          <button className='diamondButton'>RED</button>
+          <button className='theRedBlack'>RED</button>
+            <div className='diamond' style={{borderBottomColor: colors.red}}>
+              <div className='extension' style={{borderTopColor: colors.red}}></div>
+            </div>
+            <div className='diamond border'>
+              <div className='extension'></div>
+            </div>
         </div>
         <div id='black'>
-          <button className='diamondButton'>BLACK</button>
+          <button className='theRedBlack'>BLACK</button>
+          <div className='diamond' style={{borderBottomColor: colors.black}}>
+            <div className='extension' style={{borderTopColor: colors.black}}></div>
+          </div>
+          <div className='diamond border'>
+            <div className='extension'></div>
+          </div>
         </div>
         <div id='odd'>
           <button className='diamondButton'>ODD</button>

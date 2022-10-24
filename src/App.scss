@@ -234,6 +234,7 @@ $mainFrame: $boxD * 13;
                 border-right: $borderW solid #fff;
                 border-bottom: $borderW solid #fff;
                 box-sizing: border-box;
+                position: relative;
             }
             #F19TO36{
                 border-left: $borderW solid #fff;
@@ -243,6 +244,79 @@ $mainFrame: $boxD * 13;
             #F1TO18{
                 border-radius: 0 0 10px 0;
             }
+            .red, .black{
+                text-align: center;
+            }
+
+            $bSize: 50px;  
+            $borderSize: $bSize - 20;    
+            .diamond {
+              width: 0;
+              height: 0;
+              border: $bSize solid transparent;
+              border-bottom-width: $borderSize;
+              border-bottom-style: solid;
+              position: relative;
+              margin: 0 auto;
+              top: -$bSize / 1.3;
+              z-index: 1;
+              transition: opacity .1s ease-in-out;
+              .extension {
+                content: '';
+                position: absolute;
+                left: -$bSize;
+                top: $borderSize;
+                width: 0;
+                height: 0;
+                border: $bSize solid transparent;
+                border-top-width: $borderSize;
+                border-top-style: solid;
+                z-index: 1;
+              }
+            }
+            .diamond.border{
+              $DBorder: $borderW;    
+              $BorderbSize: $bSize + $DBorder * 1.5;
+              $BorderwSize: $borderSize + $DBorder;
+              border: $BorderbSize solid transparent;
+              border-bottom-width: $BorderwSize;
+              border-bottom-color: #fff;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -99%);
+              z-index: -1;
+                  .extension {
+                      left: -$BorderbSize;
+                      top: $BorderwSize;
+                      border: $BorderbSize solid transparent;
+                      border-top-color: #fff;
+                      border-top-width: $BorderwSize;
+                      z-index: -1;
+                  }
+             }
+            .theRedBlack{
+                width: $bSize * 2;
+                height: $borderSize * 2;
+                direction: ltr;
+                overflow: hidden;
+                text-align: left;
+                text-indent: -9999px;
+                white-space: nowrap;
+                position: absolute;
+                display: block;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+              span{
+                visibility: hidden;
+              }
+            }
+            .theRedBlack:hover + .diamond{
+                opacity: .8;
+            }
+          
         }
         @include diamondButton;
     }

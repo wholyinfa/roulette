@@ -221,6 +221,7 @@
   border-right: 4px solid #fff;
   border-bottom: 4px solid #fff;
   box-sizing: border-box;
+  position: relative;
 }
 #rouletteTable #outsideBottom #evens #F19TO36 {
   border-left: 4px solid #fff;
@@ -229,6 +230,72 @@
 }
 #rouletteTable #outsideBottom #evens #F1TO18 {
   border-radius: 0 0 10px 0;
+}
+#rouletteTable #outsideBottom #evens .red, #rouletteTable #outsideBottom #evens .black {
+  text-align: center;
+}
+#rouletteTable #outsideBottom #evens .diamond {
+  width: 0;
+  height: 0;
+  border: 50px solid transparent;
+  border-bottom-width: 30px;
+  border-bottom-style: solid;
+  position: relative;
+  margin: 0 auto;
+  top: -38.4615384615px;
+  z-index: 1;
+  transition: opacity 0.1s ease-in-out;
+}
+#rouletteTable #outsideBottom #evens .diamond .extension {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  border: 50px solid transparent;
+  border-top-width: 30px;
+  border-top-style: solid;
+  z-index: 1;
+}
+#rouletteTable #outsideBottom #evens .diamond.border {
+  border: 56px solid transparent;
+  border-bottom-width: 34px;
+  border-bottom-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -99%);
+  z-index: -1;
+}
+#rouletteTable #outsideBottom #evens .diamond.border .extension {
+  left: -56px;
+  top: 34px;
+  border: 56px solid transparent;
+  border-top-color: #fff;
+  border-top-width: 34px;
+  z-index: -1;
+}
+#rouletteTable #outsideBottom #evens .theRedBlack {
+  width: 100px;
+  height: 60px;
+  direction: ltr;
+  overflow: hidden;
+  text-align: left;
+  text-indent: -9999px;
+  white-space: nowrap;
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+#rouletteTable #outsideBottom #evens .theRedBlack span {
+  visibility: hidden;
+}
+#rouletteTable #outsideBottom #evens .theRedBlack:hover + .diamond {
+  opacity: 0.8;
 }
 #rouletteTable #outsideBottom .diamondButton, #rouletteTable #outsideBottom .diamondButton::after {
   background-image: url("./Assets/diamondButton.svg");
