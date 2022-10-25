@@ -200,7 +200,10 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips, activeCh
       element.classList.remove('active');
     });
     
-    if ( cleanUp ) return;
+    if ( cleanUp ) {
+      activeChip.current = null;
+      return;
+    };
     target.parentElement.classList.add('active');
     target.parentElement.classList.remove('fade');
     activeChip.current = target;
@@ -356,22 +359,31 @@ function App() {
     return cChips;
   }
 
-  const activeChip = useRef<HTMLButtonElement>(null);
+  const activeChip = useRef<HTMLButtonElement | null>(null);
   interface Bet {
     chip: string,
     score: number,
     id: string,
+    betClass: string,
     betCount: number,
     affectedNumbers: number[] | string[]
   } 
   const activeBet = useRef<Bet[]>([]);
   const handleBet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, betType: betTypes) => {
+    const chips = calculateChips();
     if ( activeChip.current === null ) return;
+    const chipType = Array.from(activeChip.current.classList).filter( c => c.match(/(c[0-9]+)/g))[0];
+    if ( chips[chipType as keyof chips] === 0 ) return;
+    if ( chips[chipType as keyof chips] === 1 ) {
+      const chipNames = Object.keys(chips);
+      const prevChipIndex = Object.values(chips).findIndex( c => c === 1) - 1;
+      Object(document.querySelector(`#chips .chip.${chipNames[prevChipIndex]}`)).click();
+    };
+
     const { target } = Object(e);
     const targetClass = target.classList[0];
     const targetId = target.parentElement.id;
 
-    const chipType = Array.from(activeChip.current.classList).filter( c => c.match(/(c[0-9]+)/g))[0];
     const score = (
       betType === '1to18' || betType === '19to36' || 
       betType === 'odd' || betType === 'even' || 
@@ -388,7 +400,8 @@ function App() {
     ( betType === 'topLine' ) ? 6 : 0
     ;
     let affectedNumbers: any[] = [];
-    const exNum = (returnNum?: boolean) => (returnNum) ? Number(targetId.match(/\d+/)[0]) : targetId.match(/\d+/)[0];
+    const getNum = (num: any) => num.match(/\d+/)[0];
+    const exNum = (returnNum?: boolean) => (returnNum) ? Number(getNum(targetId)) : getNum(targetId)[0];
     if( betType === 'straight' )
       affectedNumbers.push(
         exNum(exNum() !== '0' && exNum() !== '00')
@@ -449,8 +462,10 @@ function App() {
         score: score,
         id: targetId,
         betCount: 1,
+        betClass: targetClass,
         affectedNumbers: affectedNumbers,
       });
+      setTotalMoney(totalMoney - Number(getNum(chipType)));
     }
     if( activeBet.current.length ){
       let newBet = true;
@@ -462,11 +477,11 @@ function App() {
           ){
             newBet = false;
             activeBet.current[i].betCount += 1;
+            setTotalMoney(totalMoney - Number(getNum(chipType)));
           }
       });
       if( newBet ) updateBet();
     }else updateBet();
-    console.log(activeBet.current);
   }
 
   return <>
