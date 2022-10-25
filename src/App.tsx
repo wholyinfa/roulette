@@ -20,7 +20,18 @@ interface idNumbers{
   number: number,
   color: betColor
 }
-function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
+function BetButton({children, id, activeBet}: InferProps<typeof BetButton.propTypes>){
+  console.log(activeBet);
+  return <div id={id}>
+    {children}
+    </div>;
+}
+BetButton.propTypes = {
+  children: PropTypes.any,
+  id: PropTypes.string.isRequired,
+  activeBet: PropTypes.array.isRequired,
+}
+function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propTypes>) {
   let groupedNumbers: idNumbers[][] = [];
 
   let I = 0;
@@ -37,13 +48,19 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
   const handleBetType = (bet: betTypes) => bet;
   return <div id='rouletteTable'>
     <div id='zeros'>
-      <div id='N0'>
+      <BetButton
+          id='N0'
+          activeBet={activeBet}
+      >
         <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>0</button>
         <button onClick={(e) => handleBet(e, handleBetType('split'))} className='split'></button>
-      </div>
-      <div id='N00'>
+      </BetButton>
+      <BetButton
+          id='N00'
+          activeBet={activeBet}
+      >
         <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>00</button>
-      </div>
+      </BetButton>
     </div>
     <div id='inside'>
       {
@@ -52,10 +69,10 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
           {
             numbers.map( (idNumber, ii) => {
               const num = idNumber.number;
-              return <div
-                id={`N${num}`}
-                key={ii}
-              >
+              return <BetButton
+                  id={`N${num}`}
+                  key={ii}
+                  activeBet={activeBet} >
                 <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors[idNumber.color]}}>{num}</button>
                 <button
                   onClick={(e) => handleBet(e, handleBetType(( num % 3 === 0 ) ? 'street' : 'split'))}
@@ -85,7 +102,7 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
                   <button onClick={(e) => handleBet(e, handleBetType('topLine'))} className={'topLine'}></button>
                   <button onClick={(e) => handleBet(e, handleBetType('trio'))} className={'trio'}></button></> : ''
                 }
-                </div>;
+                </BetButton>;
             })
           }
           </div>
@@ -93,36 +110,63 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
       }
     </div>
     <div id='outsideLeft'>
-      <div id='COL1'>
+      <BetButton
+          id='COL1'
+          activeBet={activeBet}
+      >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
-      </div>
-      <div id='COL2'>
+      </BetButton>
+      <BetButton
+          id='COL2'
+          activeBet={activeBet}
+      >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
-      </div>
-      <div id='COL3'>
+      </BetButton>
+      <BetButton
+          id='COL3'
+          activeBet={activeBet}
+      >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
-      </div>
+      </BetButton>
     </div>
     <div id='outsideBottom'>
       <div id='dozens'>
-        <div id='D1'>
+        <BetButton
+            id='D1'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('1st12'))} className='diamondButton'>1ST 12</button>
-        </div>
-        <div id='D2'>
+        </BetButton>
+        <BetButton
+            id='D2'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('2nd12'))} className='diamondButton'>2ND 12</button>
-        </div>
-        <div id='D3'>
+        </BetButton>
+        <BetButton
+            id='D3'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('3rd12'))} className='diamondButton'>3RD 12</button>
-        </div>
+        </BetButton>
       </div>
       <div id='evens'>
-        <div id='F1TO18'>
+        <BetButton
+            id='F1TO18'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('1to18'))} className='diamondButton'>1 TO 18</button>
-        </div>
-        <div id='even'>
+        </BetButton>
+        <BetButton
+            id='even'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('even'))} className='diamondButton'>EVEN</button>
-        </div>
-        <div id='red'>
+        </BetButton>
+        <BetButton
+            id='red'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('red'))} className='theRedBlack'>RED</button>
             <div className='diamond' style={{borderBottomColor: colors.red}}>
               <div className='extension' style={{borderTopColor: colors.red}}></div>
@@ -130,8 +174,11 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
             <div className='diamond border'>
               <div className='extension'></div>
             </div>
-        </div>
-        <div id='black'>
+        </BetButton>
+        <BetButton
+            id='black'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('black'))} className='theRedBlack'>BLACK</button>
           <div className='diamond' style={{borderBottomColor: colors.black}}>
             <div className='extension' style={{borderTopColor: colors.black}}></div>
@@ -139,13 +186,19 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
           <div className='diamond border'>
             <div className='extension'></div>
           </div>
-        </div>
-        <div id='odd'>
+        </BetButton>
+        <BetButton
+            id='odd'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('odd'))} className='diamondButton'>ODD</button>
-        </div>
-        <div id='F19TO36'>
+        </BetButton>
+        <BetButton
+            id='F19TO36'
+            activeBet={activeBet}
+        >
           <button onClick={(e) => handleBet(e, handleBetType('19to36'))} className='diamondButton'>19 TO 36</button>
-        </div>
+        </BetButton>
       </div>
     </div>
   </div>;
@@ -153,6 +206,7 @@ function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
 Table.propTypes = {
   numbers: PropTypes.array.isRequired,
   handleBet: PropTypes.func.isRequired,
+  activeBet: PropTypes.array.isRequired
 }
 
 
@@ -505,6 +559,7 @@ function App() {
       <Table
         numbers={tableNumbers}
         handleBet={handleBet}
+        activeBet={activeBet.current}
       />
       <BetBoard
         totalMoney={totalMoney}
