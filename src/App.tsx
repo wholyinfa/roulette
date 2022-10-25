@@ -147,6 +147,7 @@ Table.propTypes = {
 
 
 interface chips{
+  c5: number,
   c25: number,
   c50: number,
   c100: number,
@@ -171,10 +172,27 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferPr
       Number(value) <= maxAmount
     ) setTotalMoney(value);
   }
-  const [boughtIn, setBoughtIn] = useState<boolean>(false);
+  const [boughtIn, setBoughtIn] = useState<boolean>(true);
   const handleSubmit = () => {
     if( totalMoney >= minAmount ) setBoughtIn(true);
     else document.querySelector('#minNotice')?.classList.add('active');
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const { target } = Object(e);
+    const cleanUp = ( target.parentElement.classList.contains('active') ) ? true : false;
+    document.querySelectorAll('#chips .chipContainer').forEach(element => {
+      if ( !cleanUp )
+      element.classList.add('fade');
+      else
+      element.classList.remove('fade');
+
+      element.classList.remove('active');
+    });
+    
+    if ( cleanUp ) return;
+    target.parentElement.classList.add('active');
+    target.parentElement.classList.remove('fade');
   }
 
   const chips: chips = calculateChips();
@@ -193,7 +211,7 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferPr
                 Object.entries(chips).map( ([key, value], i) => {
                   if( value )
                   return <div key={i} className='chipContainer'>
-                    <button className={`chip ${key}`}>
+                    <button onClick={(e) => handleClick(e)} className={`chip ${key}`}>
 
                     </button>
                     <div className='amount'>
@@ -304,12 +322,13 @@ function App() {
   .sort(
     (a, b) => a.number - b.number
     )
-  const [totalMoney, setTotalMoney] = useState<number>(100);
+  const [totalMoney, setTotalMoney] = useState<number>(100000);
   const calculateChips = () => {
     function division(total: number,num: number){
       return Math.floor(total / num);
     }
     const cChips = {
+      c5: 0,
       c25: 0,
       c50: 0,
       c100: 0,

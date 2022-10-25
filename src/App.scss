@@ -5,6 +5,8 @@ $borderW: 4px;
 $zerosW: 60px;
 $mainFrame: $boxD * 13;
 $hoverOpacity: .3;
+$tableW: $mainFrame + $zerosW;
+$dozensW: $mainFrame / 3;
 
 @mixin diamondButton {
     .diamondButton{
@@ -34,7 +36,7 @@ $hoverOpacity: .3;
     }
 }
 #rouletteTable{
-    width: $mainFrame + $zerosW;
+    width: $tableW;
     height: $rouletteH;
     position: relative;
     margin: 0 auto;
@@ -161,7 +163,7 @@ $hoverOpacity: .3;
                 border-radius: 100px;
                 position: relative;
                 top: $borderW;
-                left: $borderW;
+                left: $borderW / 2;
             }
             > .straight::after{
                 content: '';
@@ -271,7 +273,7 @@ $hoverOpacity: .3;
             box-sizing: border-box;
             > *{
                 float: right;
-                width: $mainFrame / 3;
+                width: $dozensW;
                 height: $boxD;
                 line-height: $boxD;
                 border-right: $borderW solid #fff;
@@ -380,8 +382,8 @@ $hoverOpacity: .3;
 }
 
 #betBoard{
-    width: $mainFrame;
-    margin: 0 auto;
+    width: $tableW;
+    margin: 50px auto;
     text-align: center;
     #buyInConsole{
         margin: 2em;
@@ -431,6 +433,89 @@ $hoverOpacity: .3;
         .charcoalButton:hover{
             cursor: pointer;
             transform: scale(.9);
+        }
+    }
+    $betConsoleW: 200px;
+    #betConsole{
+        height: $betConsoleW;
+        color: #fff;
+        text-align: left;
+        > *{
+            max-height: 100%;
+            text-align: center;
+            float: left;
+        }
+        #amountSection{
+            width: $dozensW - $borderW;
+            margin: 0;
+            padding: $betConsoleW / 3 0;
+        }
+        #chipSection{
+            width: $dozensW * 2;
+            height: 100%;
+            border-left: $borderW solid #fff;
+            box-sizing: content-box;
+            position: relative;
+            $chipW: 100px;
+            #chips{
+                width: $chipW * 4;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                .chipContainer{
+                    width: $chipW;
+                    height: $chipW;
+                    display: inline-block;
+                    box-sizing: border-box;
+                    padding: 12.5px;
+                    transition: .1s all ease-in-out;
+                    .chip{
+                        width: 50px;
+                        height: 50px;
+                        border: none;
+                        background: transparent center no-repeat;
+                        background-size: contain;
+                    }
+                    .chip.c5{
+                        background-image: url('./Assets/c5.png');
+                    }
+                    .chip.c25{
+                        background-image: url('./Assets/c25.png');
+                    }
+                    .chip.c50{
+                        background-image: url('./Assets/c50.png');
+                    }
+                    .chip.c100{
+                        background-image: url('./Assets/c100.png');
+                    }
+                    .chip.c500{
+                        background-image: url('./Assets/c500.png');
+                    }
+                    .chip.c1000{
+                        background-image: url('./Assets/c1000.png');
+                    }
+                    .chip.c5000{
+                        background-image: url('./Assets/c5000.png');
+                    }
+                    .chip.c10000{
+                        background-image: url('./Assets/c10000.png');
+                    }
+                    .chip:hover{
+                        cursor: pointer;
+                    }
+                    .amount{
+                        margin-top: .25em;
+                        font-size: 1.1em;
+                    }
+                }
+                .chipContainer.active{
+                    
+                }
+                .chipContainer.fade{
+                    opacity: $hoverOpacity;
+                }
+            }
         }
     }
 }

@@ -120,7 +120,7 @@
   border-radius: 100px;
   position: relative;
   top: 4px;
-  left: 4px;
+  left: 2px;
 }
 #rouletteTable #inside .row > * > .straight::after {
   content: "";
@@ -374,8 +374,8 @@
 }
 
 #betBoard {
-  width: 1105px;
-  margin: 0 auto;
+  width: 1165px;
+  margin: 50px auto;
   text-align: center;
 }
 #betBoard #buyInConsole {
@@ -426,4 +426,82 @@
 #betBoard #buyInConsole .charcoalButton:hover {
   cursor: pointer;
   transform: scale(0.9);
+}
+#betBoard #betConsole {
+  height: 200px;
+  color: #fff;
+  text-align: left;
+}
+#betBoard #betConsole > * {
+  max-height: 100%;
+  text-align: center;
+  float: left;
+}
+#betBoard #betConsole #amountSection {
+  width: 364.3333333333px;
+  margin: 0;
+  padding: 66.6666666667px 0;
+}
+#betBoard #betConsole #chipSection {
+  width: 736.6666666667px;
+  height: 100%;
+  border-left: 4px solid #fff;
+  box-sizing: content-box;
+  position: relative;
+}
+#betBoard #betConsole #chipSection #chips {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#betBoard #betConsole #chipSection #chips .chipContainer {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 12.5px;
+  transition: 0.1s all ease-in-out;
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: transparent center no-repeat;
+  background-size: contain;
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c5 {
+  background-image: url("./Assets/c5.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c25 {
+  background-image: url("./Assets/c25.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c50 {
+  background-image: url("./Assets/c50.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c100 {
+  background-image: url("./Assets/c100.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c500 {
+  background-image: url("./Assets/c500.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c1000 {
+  background-image: url("./Assets/c1000.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c5000 {
+  background-image: url("./Assets/c5000.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip.c10000 {
+  background-image: url("./Assets/c10000.png");
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .chip:hover {
+  cursor: pointer;
+}
+#betBoard #betConsole #chipSection #chips .chipContainer .amount {
+  margin-top: 0.25em;
+  font-size: 1.1em;
+}
+#betBoard #betConsole #chipSection #chips .chipContainer.fade {
+  opacity: 0.3;
 }/*# sourceMappingURL=App.css.map */
