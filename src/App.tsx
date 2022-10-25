@@ -1,6 +1,6 @@
 import './App.css';
 import { Wheel } from 'react-custom-roulette';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { WheelData } from 'react-custom-roulette/dist/components/Wheel/types';
 import PropTypes, {InferProps} from 'prop-types';
 const colors = {
@@ -146,6 +146,83 @@ Table.propTypes = {
 }
 
 
+interface chips{
+  c25: number,
+  c50: number,
+  c100: number,
+  c500: number,
+  c1000: number,
+  c5000: number,
+  c10000: number,
+}
+function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferProps<typeof BetBoard.propTypes>) {
+
+  const maxAmount = 100000;
+  const minAmount = 100;
+  function addDots(num: number){
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const value = ( target.value === '' ) ? '' : target.value.match(/[0-9]/g)?.join('');
+    console.log(value);
+    if(
+      ( value || value === '' ) &&
+      Number(value) <= maxAmount
+    ) setTotalMoney(value);
+  }
+  const [boughtIn, setBoughtIn] = useState<boolean>(false);
+  const handleSubmit = () => {
+    if( totalMoney >= minAmount ) setBoughtIn(true);
+    else document.querySelector('#minNotice')?.classList.add('active');
+  }
+
+  const chips: chips = calculateChips();
+  return <div id='betBoard'>
+    
+    {
+      boughtIn ?
+        <div id='betConsole'>
+          <h2 id='amountSection'>
+            <div>AMOUNT LEFT:</div>
+            <div>{addDots(totalMoney)} €</div>
+          </h2>
+          <div id='chipSection'>
+            <div id='chips'>
+              {
+                Object.entries(chips).map( ([key, value], i) => {
+                  if( value )
+                  return <div key={i} className='chipContainer'>
+                    <button className={`chip ${key}`}>
+
+                    </button>
+                    <div className='amount'>
+                      {value}
+                    </div>
+                  </div>;
+                })
+              }
+            </div>
+          </div>
+        </div> :
+        <div id='buyInConsole'>
+          <h2>HOW MUCH DO YOU WANT TO BUY IN?</h2>
+          <div id='minNotice'>MIN: {addDots(minAmount)} €</div>
+          <div id='maxNotice'>MAX: {addDots(maxAmount)} €</div>
+          <input type='text ' name='totalAmount' value={totalMoney} onChange={ (e) => handleChange(e)} />
+          <button onClick={handleSubmit}>PLAY!</button>
+        </div>
+    }
+    
+  </div>
+}
+BetBoard.propTypes = {
+  children: PropTypes.any,
+  totalMoney: PropTypes.any.isRequired,
+  setTotalMoney: PropTypes.func.isRequired,
+  calculateChips: PropTypes.func.isRequired,
+}
+
 function App() {
   const data : Array<WheelData> = [
     { option: '28' },
@@ -227,6 +304,27 @@ function App() {
   .sort(
     (a, b) => a.number - b.number
     )
+  const [totalMoney, setTotalMoney] = useState<number>(100);
+  const calculateChips = () => {
+    function division(total: number,num: number){
+      return Math.floor(total / num);
+    }
+    const cChips = {
+      c25: 0,
+      c50: 0,
+      c100: 0,
+      c500: 0,
+      c1000: 0,
+      c5000: 0,
+      c10000: 0,
+    };
+    Object.keys(cChips).map( key => {
+      const extractedNum = parseInt(key.replace('c',''));
+      (cChips as any)[key] = division(totalMoney, extractedNum);
+    });
+    return cChips;
+  }
+
   return <>
        <Wheel 
         mustStartSpinning={mustSpin}
@@ -247,6 +345,11 @@ function App() {
       </button>
       <Table
         numbers={tableNumbers}
+      />
+      <BetBoard
+        totalMoney={totalMoney}
+        setTotalMoney={setTotalMoney}
+        calculateChips={calculateChips}
       />
     </>;
 }

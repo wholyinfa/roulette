@@ -57,7 +57,7 @@
   border-radius: 125px;
   border: 2px solid #fff;
   line-height: normal;
-  margin-left: 5px;
+  margin-left: 10px;
   position: relative;
 }
 #rouletteTable #zeros > div .straight::after {
