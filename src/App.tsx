@@ -11,11 +11,16 @@ const colors = {
 }
 
 type betColor = 'green' | 'red' | 'black';
+type betTypes = 
+  'straight' | 'split' | 'trio' | 'corner' |
+  'street' | 'dbStreet' | 'column' | '1st12' |
+  '2nd12' | '3rd12' | '1to18' | 'even' | 'odd' |
+  'red' | 'black' | '19to36' | 'topLine' ;
 interface idNumbers{
   number: number,
   color: betColor
 }
-function Table({numbers}: InferProps<typeof Table.propTypes>) {
+function Table({numbers, handleBet}: InferProps<typeof Table.propTypes>) {
   let groupedNumbers: idNumbers[][] = [];
 
   let I = 0;
@@ -28,15 +33,16 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
       I++;
     };
   }
-  console.log(groupedNumbers);
+
+  const handleBetType = (bet: betTypes) => bet;
   return <div id='rouletteTable'>
     <div id='zeros'>
       <div id='N0'>
-        <button className='straight' style={{backgroundColor: colors.green}}>0</button>
-        <button className='split'></button>
+        <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>0</button>
+        <button onClick={(e) => handleBet(e, handleBetType('split'))} className='split'></button>
       </div>
       <div id='N00'>
-        <button className='straight' style={{backgroundColor: colors.green}}>00</button>
+        <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>00</button>
       </div>
     </div>
     <div id='inside'>
@@ -50,31 +56,34 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
                 id={`N${num}`}
                 key={ii}
               >
-                <button className='straight' style={{backgroundColor: colors[idNumber.color]}}>{num}</button>
-                <button className={ ( num % 3 === 0 ) ? 'street' : 'bottom'}></button>
+                <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors[idNumber.color]}}>{num}</button>
+                <button
+                  onClick={(e) => handleBet(e, handleBetType(( num % 3 === 0 ) ? 'street' : 'split'))}
+                  className={ ( num % 3 === 0 ) ? 'street' : 'bottom'}
+                ></button>
                 { 
                 ( num === 1 || num === 3 ) ?
-                  <button className='right'></button> :
+                  <button onClick={(e) => handleBet(e, handleBetType('split'))} className='right'></button> :
                 ( num === 2 ) ? <>
-                    <button className='split0'></button> 
-                    <button className='basket'></button> 
-                    <button className='split00'></button>
+                    <button onClick={(e) => handleBet(e, handleBetType('split'))} className='split0'></button> 
+                    <button onClick={(e) => handleBet(e, handleBetType('trio'))} className='basket'></button> 
+                    <button onClick={(e) => handleBet(e, handleBetType('split'))} className='split00'></button>
                   </> : ''
                 }
                 {
                   ( num !== 34 && num !== 35 && num !== 36 ) ?<>
-                    <button className={ ( num % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
-                    <button className='left'></button>
+                    <button onClick={(e) => handleBet(e, handleBetType( ( num % 3 === 0 ) ? 'dbStreet' : 'corner'))} className={ ( num % 3 === 0 ) ? 'dbStreet' : 'corner'}></button>
+                    <button onClick={(e) => handleBet(e, handleBetType('split'))} className='left'></button>
                   </>: ''
                 }
                 {
                   ( num === 1 ) ?
-                  <button className={'trio'}></button> : ''
+                  <button onClick={(e) => handleBet(e, handleBetType('trio'))} className={'trio'}></button> : ''
                 }
                 {
                   ( num === 3 ) ? <>
-                  <button className={'topLine'}></button>
-                  <button className={'trio'}></button></> : ''
+                  <button onClick={(e) => handleBet(e, handleBetType('topLine'))} className={'topLine'}></button>
+                  <button onClick={(e) => handleBet(e, handleBetType('trio'))} className={'trio'}></button></> : ''
                 }
                 </div>;
             })
@@ -85,36 +94,36 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
     </div>
     <div id='outsideLeft'>
       <div id='COL1'>
-        <button className='diamondButton'>2 TO 1</button>
+        <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </div>
       <div id='COL2'>
-        <button className='diamondButton'>2 TO 1</button>
+        <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </div>
       <div id='COL3'>
-        <button className='diamondButton'>2 TO 1</button>
+        <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </div>
     </div>
     <div id='outsideBottom'>
       <div id='dozens'>
         <div id='D1'>
-          <button className='diamondButton'>1ST 12</button>
+          <button onClick={(e) => handleBet(e, handleBetType('1st12'))} className='diamondButton'>1ST 12</button>
         </div>
         <div id='D2'>
-          <button className='diamondButton'>2ND 12</button>
+          <button onClick={(e) => handleBet(e, handleBetType('2nd12'))} className='diamondButton'>2ND 12</button>
         </div>
         <div id='D3'>
-          <button className='diamondButton'>3RD 12</button>
+          <button onClick={(e) => handleBet(e, handleBetType('3rd12'))} className='diamondButton'>3RD 12</button>
         </div>
       </div>
       <div id='evens'>
         <div id='F1TO18'>
-          <button className='diamondButton'>1 TO 18</button>
+          <button onClick={(e) => handleBet(e, handleBetType('1to18'))} className='diamondButton'>1 TO 18</button>
         </div>
         <div id='even'>
-          <button className='diamondButton'>EVEN</button>
+          <button onClick={(e) => handleBet(e, handleBetType('even'))} className='diamondButton'>EVEN</button>
         </div>
         <div id='red'>
-          <button className='theRedBlack'>RED</button>
+          <button onClick={(e) => handleBet(e, handleBetType('red'))} className='theRedBlack'>RED</button>
             <div className='diamond' style={{borderBottomColor: colors.red}}>
               <div className='extension' style={{borderTopColor: colors.red}}></div>
             </div>
@@ -123,7 +132,7 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
             </div>
         </div>
         <div id='black'>
-          <button className='theRedBlack'>BLACK</button>
+          <button onClick={(e) => handleBet(e, handleBetType('black'))} className='theRedBlack'>BLACK</button>
           <div className='diamond' style={{borderBottomColor: colors.black}}>
             <div className='extension' style={{borderTopColor: colors.black}}></div>
           </div>
@@ -132,17 +141,18 @@ function Table({numbers}: InferProps<typeof Table.propTypes>) {
           </div>
         </div>
         <div id='odd'>
-          <button className='diamondButton'>ODD</button>
+          <button onClick={(e) => handleBet(e, handleBetType('odd'))} className='diamondButton'>ODD</button>
         </div>
         <div id='F19TO36'>
-          <button className='diamondButton'>19 TO 36</button>
+          <button onClick={(e) => handleBet(e, handleBetType('19to36'))} className='diamondButton'>19 TO 36</button>
         </div>
       </div>
     </div>
   </div>;
 }
 Table.propTypes = {
-  numbers: PropTypes.array.isRequired
+  numbers: PropTypes.array.isRequired,
+  handleBet: PropTypes.func.isRequired,
 }
 
 
@@ -156,7 +166,7 @@ interface chips{
   c5000: number,
   c10000: number,
 }
-function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferProps<typeof BetBoard.propTypes>) {
+function BetBoard({children, totalMoney, setTotalMoney, calculateChips, activeChip}: InferProps<typeof BetBoard.propTypes>) {
 
   const maxAmount = 100000;
   const minAmount = 100;
@@ -193,6 +203,7 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferPr
     if ( cleanUp ) return;
     target.parentElement.classList.add('active');
     target.parentElement.classList.remove('fade');
+    activeChip.current = target;
   }
 
   const chips: chips = calculateChips();
@@ -239,6 +250,7 @@ BetBoard.propTypes = {
   totalMoney: PropTypes.any.isRequired,
   setTotalMoney: PropTypes.func.isRequired,
   calculateChips: PropTypes.func.isRequired,
+  activeChip: PropTypes.any.isRequired,
 }
 
 function App() {
@@ -344,6 +356,119 @@ function App() {
     return cChips;
   }
 
+  const activeChip = useRef<HTMLButtonElement>(null);
+  interface Bet {
+    chip: string,
+    score: number,
+    id: string,
+    betCount: number,
+    affectedNumbers: number[] | string[]
+  } 
+  const activeBet = useRef<Bet[]>([]);
+  const handleBet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, betType: betTypes) => {
+    if ( activeChip.current === null ) return;
+    const { target } = Object(e);
+    const targetClass = target.classList[0];
+    const targetId = target.parentElement.id;
+
+    const chipType = Array.from(activeChip.current.classList).filter( c => c.match(/(c[0-9]+)/g))[0];
+    const score = (
+      betType === '1to18' || betType === '19to36' || 
+      betType === 'odd' || betType === 'even' || 
+      betType === 'red' || betType === 'black'
+    ) ? 1 : (
+      betType === 'column' || betType === '1st12' || 
+      betType === '2nd12' || betType === '3rd12'
+    ) ? 2 :
+    ( betType === 'straight' ) ? 35 :
+    ( betType === 'split' ) ? 17 :
+    ( betType === 'corner' ) ? 8 :
+    ( betType === 'dbStreet' ) ? 5 :
+    ( betType === 'street' || betType === 'trio' ) ? 11 :
+    ( betType === 'topLine' ) ? 6 : 0
+    ;
+    let affectedNumbers: any[] = [];
+    const exNum = (returnNum?: boolean) => (returnNum) ? Number(targetId.match(/\d+/)[0]) : targetId.match(/\d+/)[0];
+    if( betType === 'straight' )
+      affectedNumbers.push(
+        exNum(exNum() !== '0' && exNum() !== '00')
+      )
+    else if ( betType === 'corner' ){
+      const num = exNum(true);
+      affectedNumbers = [num, num+1, num+3, num+4]
+    }
+    else if ( betType === 'dbStreet' ){
+      const num = exNum(true);
+      affectedNumbers = [num-2, num-1, num, num+1, num+2, num+3]
+    }
+    else if ( betType === 'split' ){
+      const num = exNum(true);
+      if( num === 0 ) affectedNumbers = [exNum(), '00'];
+      else if( targetClass === 'left' ) affectedNumbers = [num, num+3];
+      else if( targetClass === 'right' && num === 1 ) affectedNumbers = [num, '0'];
+      else if( targetClass === 'right' && num === 3 ) affectedNumbers = [num, '00'];
+      else if( targetClass === 'bottom' ) affectedNumbers = [num, num+1];
+      else if( targetClass === 'split0' ) affectedNumbers = [num, '0'];
+      else if( targetClass === 'split00' ) affectedNumbers = [num, '00'];
+    }
+    else if ( betType === 'street' ){
+      const num = exNum(true);
+      affectedNumbers = [num-2, num-1, num]
+    }
+    else if ( betType === 'topLine' )
+      affectedNumbers = ['0', '00', 1, 2, 3];
+    else if ( betType === 'trio' ){
+      const num = exNum(true);
+      if( targetClass === 'basket' ) affectedNumbers = [num, '0', '00'];
+      else if( num === 1 ) affectedNumbers = [num, num+1, '0'];
+      else if( num === 3 ) affectedNumbers = [num, num-1, '00'];
+    }
+    else{
+      tableNumbers.map( (n, i) => {
+        const num = n.number;
+        if (  betType === '1to18' && num > 0 && num < 19 ) affectedNumbers.push(num);
+        else if ( betType === '19to36' && num > 18 && num < 37 ) affectedNumbers.push(num);
+        else if ( betType === 'black' && n.color === 'black' ) affectedNumbers.push(num)
+        else if ( betType === 'red' && n.color === 'red' ) affectedNumbers.push(num)
+        else if ( betType === 'even' && num % 2 === 0 ) affectedNumbers.push(num)
+        else if ( betType === 'odd' && num % 2 !== 0 ) affectedNumbers.push(num)
+        else if ( betType === '1st12' && num > 0 && num < 13 ) affectedNumbers.push(num)
+        else if ( betType === '2nd12' && num > 12 && num < 25 ) affectedNumbers.push(num)
+        else if ( betType === '3rd12' && num > 24 && num < 37 ) affectedNumbers.push(num)
+        else if ( betType === 'column' ){
+          if ( targetId.match(1) && i % 3 === 0 ) affectedNumbers.push(num);
+          else if ( targetId.match(2) && i % 3 === 1 ) affectedNumbers.push(num);
+          else if ( targetId.match(3) && i % 3 === 2 ) affectedNumbers.push(num);
+        }
+      } );
+    }
+    
+    const updateBet = () => {
+      activeBet.current.push({
+        chip: chipType,
+        score: score,
+        id: targetId,
+        betCount: 1,
+        affectedNumbers: affectedNumbers,
+      });
+    }
+    if( activeBet.current.length ){
+      let newBet = true;
+      activeBet.current.map( (b, i) => {
+        if(
+          affectedNumbers.join('') === b.affectedNumbers.join('') &&
+          targetId === b.id &&
+          chipType === b.chip
+          ){
+            newBet = false;
+            activeBet.current[i].betCount += 1;
+          }
+      });
+      if( newBet ) updateBet();
+    }else updateBet();
+    console.log(activeBet.current);
+  }
+
   return <>
        <Wheel 
         mustStartSpinning={mustSpin}
@@ -364,11 +489,13 @@ function App() {
       </button>
       <Table
         numbers={tableNumbers}
+        handleBet={handleBet}
       />
       <BetBoard
         totalMoney={totalMoney}
         setTotalMoney={setTotalMoney}
         calculateChips={calculateChips}
+        activeChip={activeChip}
       />
     </>;
 }
