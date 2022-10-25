@@ -371,4 +371,59 @@
 }
 #rouletteTable #outsideBottom .diamondButton:hover::after {
   opacity: 0.3;
+}
+
+#betBoard {
+  width: 1105px;
+  margin: 0 auto;
+  text-align: center;
+}
+#betBoard #buyInConsole {
+  margin: 2em;
+  color: #fff;
+}
+#betBoard #buyInConsole h2 {
+  font-size: 2em;
+  margin: 0.5em 0;
+}
+#betBoard #buyInConsole #minNotice, #betBoard #buyInConsole #maxNotice {
+  display: inline-block;
+  padding: 0.25em;
+  margin: 0 0.25em;
+  transition: all 0.1s ease-in-out;
+}
+#betBoard #buyInConsole .active {
+  border: 2px solid red;
+}
+#betBoard #buyInConsole input {
+  font-size: 2em;
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  display: block;
+  margin: 0.5em auto;
+}
+#betBoard #buyInConsole .card {
+  border-radius: 10px;
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.4);
+  background: rgb(11, 43, 34);
+  background: linear-gradient(45deg, rgb(11, 43, 34) 0%, rgb(43, 189, 150) 100%);
+}
+#betBoard #buyInConsole .charcoalButton {
+  text-decoration: none;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 5px;
+  display: inline-block;
+  transition: transform 0.1s ease-in-out;
+  transform-origin: bottom center;
+}
+#betBoard #buyInConsole .charcoalButton:hover {
+  cursor: pointer;
+  transform: scale(0.9);
 }/*# sourceMappingURL=App.css.map */

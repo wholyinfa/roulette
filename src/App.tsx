@@ -210,7 +210,7 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips}: InferPr
           <div id='minNotice'>MIN: {addDots(minAmount)} €</div>
           <div id='maxNotice'>MAX: {addDots(maxAmount)} €</div>
           <input type='text ' name='totalAmount' value={totalMoney} onChange={ (e) => handleChange(e)} />
-          <button onClick={handleSubmit}>PLAY!</button>
+          <button className='card charcoalButton' onClick={handleSubmit}>PLAY!</button>
         </div>
     }
     

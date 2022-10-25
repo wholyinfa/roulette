@@ -378,3 +378,59 @@ $hoverOpacity: .3;
         @include diamondButton;
     }
 }
+
+#betBoard{
+    width: $mainFrame;
+    margin: 0 auto;
+    text-align: center;
+    #buyInConsole{
+        margin: 2em;
+        color: #fff;
+        h2{
+            font-size: 2em;
+            margin: .5em 0;
+        }
+        #minNotice, #maxNotice{
+            display: inline-block;
+            padding: .25em;
+            margin: 0 .25em;
+            transition: all .1s ease-in-out;
+        }
+        .active{
+            border: 2px solid red;
+        }
+        input{
+            font-size: 2em;
+            text-align: center;
+            width: 200px;
+            height: 50px;
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            display: block;
+            margin: .5em auto;
+        }
+        .card{
+            border-radius: 10px;
+            -webkit-box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4); 
+            box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4);
+            background: rgb(11,43,34);
+            background: linear-gradient(45deg, rgba(11,43,34,1) 0%, rgba(43,189,150,1) 100%);
+        }
+        .charcoalButton{
+            text-decoration: none;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 20px;
+            border: 0;
+            border-radius: 5px;
+            display: inline-block;
+            transition: transform .1s ease-in-out;
+            transform-origin: bottom center;
+        }
+        .charcoalButton:hover{
+            cursor: pointer;
+            transform: scale(.9);
+        }
+    }
+}
