@@ -28,13 +28,21 @@ interface Bet {
   betCount: number,
   affectedNumbers: number[] | string[]
 } 
-function BetButton({children, id, activeBet}: InferProps<typeof BetButton.propTypes>){
+function BetButton({children, id, activeBet, removeBet}: InferProps<typeof BetButton.propTypes>){
   const bets = activeBet.filter( c => c.id === id);
-  console.log(bets);
+  
+  const handleClick = (id: string) => 
+    Object(document.querySelector(id)).click();
+
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, i: number) => {
+    e.preventDefault();
+    removeBet(i);
+  }
+
   return <div id={id}>
       {
         (bets) ?
-            bets.map( b => {
+            bets.map( (b, i) => {
               const style = 
               ( b.betClass === 'left' ) ? {left: '0%', top: '50%'} :
               ( b.betClass === 'right' ) ? {left: '100%', top: '50%'} :
@@ -49,7 +57,12 @@ function BetButton({children, id, activeBet}: InferProps<typeof BetButton.propTy
               ( b.betClass === 'split' ) ? {left: '50%', top: '100%'} :
               {left: '50%', top: '50%'}
               ;
-              return <div className={`chip ${b.chip}`} style={style}> </div>
+              return <div
+                key={i}
+                onClick={(e) => handleClick(`#${id} .${b.betClass}`)}
+                onContextMenu={(e) => handleContextMenu(e, activeBet.findIndex( bet => bet === b))}
+                className={`chip ${b.chip}`}
+                style={style}> </div>
             })
           : ''
       }
@@ -60,8 +73,9 @@ BetButton.propTypes = {
   children: PropTypes.any,
   id: PropTypes.string.isRequired,
   activeBet: PropTypes.array.isRequired,
+  removeBet: PropTypes.func.isRequired
 }
-function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propTypes>) {
+function Table({numbers, handleBet, activeBet, removeBet}: InferProps<typeof Table.propTypes>) {
   let groupedNumbers: idNumbers[][] = [];
 
   let I = 0;
@@ -81,6 +95,7 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
       <BetButton
           id='N0'
           activeBet={activeBet}
+          removeBet={removeBet}
       >
         <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>0</button>
         <button onClick={(e) => handleBet(e, handleBetType('split'))} className='split'></button>
@@ -88,6 +103,7 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
       <BetButton
           id='N00'
           activeBet={activeBet}
+          removeBet={removeBet}
       >
         <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors.green}}>00</button>
       </BetButton>
@@ -102,7 +118,9 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
               return <BetButton
                   id={`N${num}`}
                   key={ii}
-                  activeBet={activeBet} >
+                  activeBet={activeBet}
+                  removeBet={removeBet}
+                  >
                 <button onClick={(e) => handleBet(e, handleBetType('straight'))} className='straight' style={{backgroundColor: colors[idNumber.color]}}>{num}</button>
                 <button
                   onClick={(e) => handleBet(e, handleBetType(( num % 3 === 0 ) ? 'street' : 'split'))}
@@ -143,18 +161,21 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
       <BetButton
           id='COL1'
           activeBet={activeBet}
+          removeBet={removeBet}
       >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </BetButton>
       <BetButton
           id='COL2'
           activeBet={activeBet}
+          removeBet={removeBet}
       >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </BetButton>
       <BetButton
           id='COL3'
           activeBet={activeBet}
+          removeBet={removeBet}
       >
         <button onClick={(e) => handleBet(e, handleBetType('column'))} className='diamondButton'>2 TO 1</button>
       </BetButton>
@@ -164,18 +185,21 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
         <BetButton
             id='D1'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('1st12'))} className='diamondButton'>1ST 12</button>
         </BetButton>
         <BetButton
             id='D2'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('2nd12'))} className='diamondButton'>2ND 12</button>
         </BetButton>
         <BetButton
             id='D3'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('3rd12'))} className='diamondButton'>3RD 12</button>
         </BetButton>
@@ -184,18 +208,21 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
         <BetButton
             id='F1TO18'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('1to18'))} className='diamondButton'>1 TO 18</button>
         </BetButton>
         <BetButton
             id='even'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('even'))} className='diamondButton'>EVEN</button>
         </BetButton>
         <BetButton
             id='red'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('red'))} className='theRedBlack'>RED</button>
             <div className='diamond' style={{borderBottomColor: colors.red}}>
@@ -208,6 +235,7 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
         <BetButton
             id='black'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('black'))} className='theRedBlack'>BLACK</button>
           <div className='diamond' style={{borderBottomColor: colors.black}}>
@@ -220,12 +248,14 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
         <BetButton
             id='odd'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('odd'))} className='diamondButton'>ODD</button>
         </BetButton>
         <BetButton
             id='F19TO36'
             activeBet={activeBet}
+            removeBet={removeBet}
         >
           <button onClick={(e) => handleBet(e, handleBetType('19to36'))} className='diamondButton'>19 TO 36</button>
         </BetButton>
@@ -236,7 +266,8 @@ function Table({numbers, handleBet, activeBet}: InferProps<typeof Table.propType
 Table.propTypes = {
   numbers: PropTypes.array.isRequired,
   handleBet: PropTypes.func.isRequired,
-  activeBet: PropTypes.array.isRequired
+  activeBet: PropTypes.array.isRequired,
+  removeBet: PropTypes.func.isRequired
 }
 
 
@@ -453,6 +484,7 @@ function App() {
     affectedNumbers: number[] | string[]
   } 
   const activeBet = useRef<Bet[]>([]);
+  const getNum = (num: any) => num.match(/\d+/)[0];
   const handleBet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, betType: betTypes) => {
     const chips = calculateChips();
     if ( activeChip.current === null ) return;
@@ -483,7 +515,6 @@ function App() {
     ( betType === 'street' || betType === 'trio' ) ? 11 :
     ( betType === 'topLine' ) ? 6 : 0;
     let affectedNumbers: any[] = [];
-    const getNum = (num: any) => num.match(/\d+/)[0];
     const exNum = (returnNum?: boolean) => (returnNum) ? Number(getNum(targetId)) : getNum(targetId)[0];
     if( betType === 'straight' )
       affectedNumbers.push(
@@ -560,11 +591,23 @@ function App() {
           ){
             newBet = false;
             activeBet.current[i].betCount += 1;
+            const currentBet = activeBet.current.splice(i, 1)[0];
+            activeBet.current.push(currentBet);
             setTotalMoney(totalMoney - Number(getNum(chipType)));
           }
       });
       if( newBet ) updateBet();
     }else updateBet();
+  }
+
+  const removeBet = (i: number) => {
+    let targetBet = activeBet.current[i];
+    if( targetBet.betCount === 1 )
+      targetBet = activeBet.current.splice(i, 1)[0];
+    else
+      activeBet.current[i].betCount -= 1;
+    
+    setTotalMoney(totalMoney + Number(getNum(targetBet.chip)));
   }
 
   return <>
@@ -589,6 +632,7 @@ function App() {
         numbers={tableNumbers}
         handleBet={handleBet}
         activeBet={activeBet.current}
+        removeBet={removeBet}
       />
       <BetBoard
         totalMoney={totalMoney}
