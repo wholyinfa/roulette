@@ -49,6 +49,19 @@ $dozensW: $mainFrame / 3;
         float: right;
         *{
             position: relative;
+            transition: background .1s ease-in-out;
+        }
+        .indicator{
+            background-color: rgba(255, 255, 255, 0.3);
+            animation: blinker .8s linear infinite;
+        }
+        .mainIndicator{
+            background: rgba(255, 255, 255, 1);
+        }
+        @keyframes blinker {
+          50% {
+            background-color: rgba(255, 255, 255, 0);
+          }
         }
     }
     button{
@@ -471,7 +484,7 @@ $dozensW: $mainFrame / 3;
             font-size: 2em;
             margin: .5em 0;
         }
-        #minNotice, #maxNotice{
+        #minNotice, #maxNotice, #chipNotice{
             display: inline-block;
             padding: .25em;
             margin: 0 .25em;

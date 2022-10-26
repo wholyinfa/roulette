@@ -289,6 +289,7 @@ function BuyInConsole({addDots, totalMoney, handleSubmit, handleChange}: InferPr
   <h2>HOW MUCH DO YOU WANT TO BUY IN?</h2>
   <div id='minNotice'>MIN: {addDots(minAmount)+currency}</div>
   <div id='maxNotice'>MAX: {addDots(maxAmount)+currency}</div>
+  <div id='chipNotice'>MIN CHIP VALUE: {5+currency}</div>
   <input type='text ' name='totalAmount' value={totalMoney} onChange={ (e) => handleChange(e)} />
   <button className='card charcoalButton' onClick={handleSubmit}>PLAY!</button>
 </div>;
@@ -309,7 +310,6 @@ function BetBoard({totalMoney, setTotalMoney, calculateChips, activeChip, reward
   const [tempTotal, setTempTotal] = useState<number>(0);
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const value = ( target.value === '' ) ? '' : target.value.match(/[0-9]/g)?.join('');
-    console.log(value);
     if(
       ( value || value === '' ) &&
       Number(value) <= maxAmount
@@ -317,7 +317,9 @@ function BetBoard({totalMoney, setTotalMoney, calculateChips, activeChip, reward
   }
   const [boughtIn, setBoughtIn] = useState<boolean>(false);
   const handleSubmit = () => {
-    if( tempTotal >= minAmount ) {
+    if( tempTotal % 5 !== 0 )
+    document.querySelector('#chipNotice')?.classList.add('active');
+    else if( tempTotal >= minAmount ) {
       setTotalMoney(tempTotal);
       setTempTotal(0);
       setBoughtIn(true);
@@ -509,12 +511,23 @@ function App() {
       setBetColor('green');
 
       let reward = 0;
+      let winnerBets: Bet[] = [];
       activeBet.current.map( b => {
         b.affectedNumbers.map( n => {
           if( n === prizeNumber ){
             reward += b.betCount * Number(getNum(b.chip));
             reward += b.score * b.betCount * Number(getNum(b.chip));
+            winnerBets.push(b);
           }
+        })
+      });
+      document.getElementById(`N${prizeNumber}`)?.classList.add('mainIndicator');
+      
+      winnerBets.length && winnerBets.map( b => {
+        document.getElementById(`${b.id}`)?.classList.add('indicator');
+        b.affectedNumbers.map( n => {
+          if( n !== prizeNumber )
+          document.getElementById(`N${n}`)?.classList.add('indicator');
         })
       });
 
@@ -699,6 +712,11 @@ function App() {
     setReward(null);
     allowPlay.current = true;
     activeBet.current = [];
+    const indicators = Array.from(document.querySelectorAll('.indicator, .mainIndicator'));
+    indicators.map( elm => {
+      elm.classList.remove('indicator');
+      elm.classList.remove('mainIndicator');
+    });
   }
 
   return <>
