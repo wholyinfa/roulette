@@ -494,6 +494,7 @@ function App() {
     setPrizeNumber(newPrizeNumber)
     setMustSpin(true);
     
+    activeChip.current = null;
     allowPlay.current = false; 
   }
   const [betColor, setBetColor] = useState<betColor | null>(null);
@@ -549,7 +550,8 @@ function App() {
     (a, b) => a.number - b.number
     )
   const [totalMoney, setTotalMoney] = useState<number>(100000);
-  const calculateChips = () => {
+  const calculateChips = (newAmount?:number) => {
+    const total = ( typeof newAmount !== 'undefined' ) ? newAmount : totalMoney  ;
     function division(total: number,num: number){
       return Math.floor(total / num);
     }
@@ -563,9 +565,11 @@ function App() {
       c5000: 0,
       c10000: 0,
     };
+
+    if( total > 0 )
     Object.keys(cChips).map( key => {
       const extractedNum = parseInt(key.replace('c',''));
-      (cChips as any)[key] = division(totalMoney, extractedNum);
+      (cChips as any)[key] = division(total, extractedNum);
     });
     return cChips;
   }
@@ -584,11 +588,16 @@ function App() {
     if ( activeChip.current === null || !allowPlay.current ) return;
     const chips = calculateChips();
     const chipType = Array.from(activeChip.current.classList).filter( c => c.match(/(c[0-9]+)/g))[0];
-    if ( chips[chipType as keyof chips] === 0 ) return;
-    if ( chips[chipType as keyof chips] === 1 ) {
-      const chipNames = Object.keys(chips);
-      const prevChipIndex = Object.values(chips).findIndex( c => c === 1) - 1;
-      Object(document.querySelector(`#chips .chip.${chipNames[prevChipIndex]}`)).click();
+    const newAmount = totalMoney - Number(getNum(chipType));
+
+    const newChips = calculateChips(newAmount);
+    if ( !Object.values(chips).find( elm => elm > 0 ) ) return;
+    if ( (newChips as any)[chipType] === 0 && newAmount > 0 ){
+      const chipsValues = Object.values(newChips);
+      const reversedI = chipsValues.sort((a, b) => (a - b)).findIndex( n => n > 0);
+      const chipI = chipsValues.length - 1 - reversedI;
+      const chipNames = Object.keys(newChips);
+      Object(document.querySelector(`#chips .chip.${chipNames[chipI]}`)).click();
     };
 
     const { target } = Object(e);
@@ -674,7 +683,7 @@ function App() {
         betClass: targetClass,
         affectedNumbers: affectedNumbers,
       });
-      setTotalMoney(totalMoney - Number(getNum(chipType)));
+      setTotalMoney(newAmount);
     }
     if( activeBet.current.length ){
       let newBet = true;
@@ -688,7 +697,7 @@ function App() {
             activeBet.current[i].betCount += 1;
             const currentBet = activeBet.current.splice(i, 1)[0];
             activeBet.current.push(currentBet);
-            setTotalMoney(totalMoney - Number(getNum(chipType)));
+            setTotalMoney(newAmount);
           }
       });
       if( newBet ) updateBet();

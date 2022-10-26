@@ -6,7 +6,8 @@ $zerosW: 60px;
 $mainFrame: $boxD * 13;
 $hoverOpacity: .3;
 $tableW: $mainFrame + $zerosW;
-$dozensW: $mainFrame / 3;
+$mainOursideW: $mainFrame - $boxD + $borderW;
+$dozensW: $boxD * 4;
 
 @mixin diamondButton {
     .diamondButton{
@@ -42,7 +43,6 @@ $dozensW: $mainFrame / 3;
     margin: 0 auto;
     text-align: center;
     border-top: $borderW solid #fff;
-    border-left: $borderW solid #fff;
     border-radius: 10px 0 0 10px;
     box-sizing: border-box;
     > *{
@@ -50,19 +50,20 @@ $dozensW: $mainFrame / 3;
         *{
             position: relative;
             transition: background .1s ease-in-out;
+            box-sizing: border-box;
         }
-        .indicator{
-            background-color: rgba(255, 255, 255, 0.3);
-            animation: blinker .8s linear infinite;
-        }
-        .mainIndicator{
-            background: rgba(255, 255, 255, 1);
-        }
-        @keyframes blinker {
-          50% {
-            background-color: rgba(255, 255, 255, 0);
-          }
-        }
+    }
+    .indicator{
+        background-color: rgba(255, 255, 255, 0.3);
+        animation: blinker .8s linear infinite;
+    }
+    .mainIndicator{
+        background: rgba(255, 255, 255, 1);
+    }
+    @keyframes blinker {
+      50% {
+        background-color: rgba(255, 255, 255, 0);
+      }
     }
     button{
         background: none;
@@ -160,10 +161,34 @@ $dozensW: $mainFrame / 3;
             transform: rotate(25deg);
             transform-origin: bottom;
         }
+        #N0.mainIndicator, #N00.mainIndicator{
+            background-color: transparent;
+            > .straight{
+                background-color: rgba(255, 255, 255, 1) !important;
+                color: black;
+            }
+        }
+        #N0.indicator, #N00.indicator{
+            background-color: transparent;
+            > .straight{
+                background-color: rgba(255, 255, 255, 1);
+                animation: zeroBlinker .8s linear infinite;
+            }
+            @keyframes zeroBlinker {
+              50% {
+                background-color: rgba(255, 255, 255, .8);
+              }
+            }
+        }
     }
     #inside{
         .row{
             float: right;
+        }
+        .row:last-child{
+            > *{
+                border-left: $borderW solid #fff;
+            }
         }
         .row > *{
             width: $boxD;
@@ -263,11 +288,17 @@ $dozensW: $mainFrame / 3;
 
     }
     #outsideLeft{
-        width: $boxD - $borderW;
+        width: $boxD;
         height: $boxD * 3;
+        > *:first-child{
+        border-radius: 10px 0 0 0 ;
+        }
+        > *:last-child{
+        border-radius: 0 0 0 10px ;
+        }
         > *{
-            border-right: $borderW solid #fff;
             border-bottom: $borderW solid #fff;
+            border-left: $borderW solid #fff;
             height: $boxD;
             line-height: $boxD;
             width: 100%;
@@ -284,29 +315,35 @@ $dozensW: $mainFrame / 3;
             box-sizing: border-box;
         }
         #dozens{
-            width: $mainFrame;
+            width: $mainOursideW;
             margin-right: $zerosW;
             box-sizing: border-box;
+            > *:first-child{
+                border-right: $borderW solid #fff;
+            }
             > *{
                 float: right;
                 width: $dozensW;
                 height: $boxD;
                 line-height: $boxD;
-                border-right: $borderW solid #fff;
+                border-left: $borderW solid #fff;
                 border-bottom: $borderW solid #fff;
                 box-sizing: border-box;
             }
         }
         #evens{
-            width: $mainFrame;
+            width: $mainOursideW;
             margin-right: $zerosW;
             box-sizing: border-box;
+            > *:first-child{
+                border-right: $borderW solid #fff;
+            }
             > *{
                 float: right;
-                width: $mainFrame / 6;
+                width: $boxD * 2;
                 height: $boxD;
                 line-height: $boxD;
-                border-right: $borderW solid #fff;
+                border-left: $borderW solid #fff;
                 border-bottom: $borderW solid #fff;
                 box-sizing: border-box;
                 position: relative;

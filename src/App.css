@@ -5,7 +5,6 @@
   margin: 0 auto;
   text-align: center;
   border-top: 4px solid #fff;
-  border-left: 4px solid #fff;
   border-radius: 10px 0 0 10px;
   box-sizing: border-box;
 }
@@ -15,13 +14,14 @@
 #rouletteTable > * * {
   position: relative;
   transition: background 0.1s ease-in-out;
+  box-sizing: border-box;
 }
-#rouletteTable > * .indicator {
+#rouletteTable .indicator {
   background-color: rgba(255, 255, 255, 0.3);
   -webkit-animation: blinker 0.8s linear infinite;
           animation: blinker 0.8s linear infinite;
 }
-#rouletteTable > * .mainIndicator {
+#rouletteTable .mainIndicator {
   background: rgb(255, 255, 255);
 }
 @-webkit-keyframes blinker {
@@ -126,8 +126,36 @@
   transform: rotate(25deg);
   transform-origin: bottom;
 }
+#rouletteTable #zeros #N0.mainIndicator, #rouletteTable #zeros #N00.mainIndicator {
+  background-color: transparent;
+}
+#rouletteTable #zeros #N0.mainIndicator > .straight, #rouletteTable #zeros #N00.mainIndicator > .straight {
+  background-color: rgb(255, 255, 255) !important;
+  color: black;
+}
+#rouletteTable #zeros #N0.indicator, #rouletteTable #zeros #N00.indicator {
+  background-color: transparent;
+}
+#rouletteTable #zeros #N0.indicator > .straight, #rouletteTable #zeros #N00.indicator > .straight {
+  background-color: rgb(255, 255, 255);
+  -webkit-animation: zeroBlinker 0.8s linear infinite;
+          animation: zeroBlinker 0.8s linear infinite;
+}
+@-webkit-keyframes zeroBlinker {
+  50% {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
+@keyframes zeroBlinker {
+  50% {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
 #rouletteTable #inside .row {
   float: right;
+}
+#rouletteTable #inside .row:last-child > * {
+  border-left: 4px solid #fff;
 }
 #rouletteTable #inside .row > * {
   width: 85px;
@@ -223,12 +251,18 @@
   top: 0;
 }
 #rouletteTable #outsideLeft {
-  width: 81px;
+  width: 85px;
   height: 255px;
 }
+#rouletteTable #outsideLeft > *:first-child {
+  border-radius: 10px 0 0 0;
+}
+#rouletteTable #outsideLeft > *:last-child {
+  border-radius: 0 0 0 10px;
+}
 #rouletteTable #outsideLeft > * {
-  border-right: 4px solid #fff;
   border-bottom: 4px solid #fff;
+  border-left: 4px solid #fff;
   height: 85px;
   line-height: 85px;
   width: 100%;
@@ -268,30 +302,36 @@
   box-sizing: border-box;
 }
 #rouletteTable #outsideBottom #dozens {
-  width: 1105px;
+  width: 1024px;
   margin-right: 60px;
   box-sizing: border-box;
 }
+#rouletteTable #outsideBottom #dozens > *:first-child {
+  border-right: 4px solid #fff;
+}
 #rouletteTable #outsideBottom #dozens > * {
   float: right;
-  width: 368.3333333333px;
+  width: 340px;
   height: 85px;
   line-height: 85px;
-  border-right: 4px solid #fff;
+  border-left: 4px solid #fff;
   border-bottom: 4px solid #fff;
   box-sizing: border-box;
 }
 #rouletteTable #outsideBottom #evens {
-  width: 1105px;
+  width: 1024px;
   margin-right: 60px;
   box-sizing: border-box;
 }
+#rouletteTable #outsideBottom #evens > *:first-child {
+  border-right: 4px solid #fff;
+}
 #rouletteTable #outsideBottom #evens > * {
   float: right;
-  width: 184.1666666667px;
+  width: 170px;
   height: 85px;
   line-height: 85px;
-  border-right: 4px solid #fff;
+  border-left: 4px solid #fff;
   border-bottom: 4px solid #fff;
   box-sizing: border-box;
   position: relative;
@@ -531,12 +571,12 @@
   float: left;
 }
 #betBoard #betConsole #amountSection {
-  width: 364.3333333333px;
+  width: 336px;
   margin: 0;
   padding: 66.6666666667px 0;
 }
 #betBoard #betConsole #chipSection {
-  width: 736.6666666667px;
+  width: 680px;
   height: 100%;
   border-left: 4px solid #fff;
   box-sizing: content-box;
