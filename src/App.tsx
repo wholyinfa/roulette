@@ -20,9 +20,39 @@ interface idNumbers{
   number: number,
   color: betColor
 }
+interface Bet {
+  chip: string,
+  score: number,
+  id: string,
+  betClass: string,
+  betCount: number,
+  affectedNumbers: number[] | string[]
+} 
 function BetButton({children, id, activeBet}: InferProps<typeof BetButton.propTypes>){
-  console.log(activeBet);
+  const bets = activeBet.filter( c => c.id === id);
+  console.log(bets);
   return <div id={id}>
+      {
+        (bets) ?
+            bets.map( b => {
+              const style = 
+              ( b.betClass === 'left' ) ? {left: '0%', top: '50%'} :
+              ( b.betClass === 'right' ) ? {left: '100%', top: '50%'} :
+              ( b.betClass === 'bottom' || b.betClass === 'street' ) ? {left: '50%', top: '100%'} :
+              ( b.betClass === 'top' ) ? {left: '50%', top: '0%'} :
+              ( b.betClass === 'topLine' || (b.betClass === 'trio' && id === 'N1') ) ? {left: '100%', top: '100%'} :
+              ( b.betClass === 'trio' && id === 'N3' ) ? {left: '100%', top: '0%'} :
+              ( b.betClass === 'basket' ) ? {left: '100%', top: '50%'} :
+              ( b.betClass === 'corner' || b.betClass === 'dbStreet' ) ? {left: '0%', top: '100%'} :
+              ( b.betClass === 'split0' ) ? {left: '100%', top: '25%'} :
+              ( b.betClass === 'split00' ) ? {left: '100%', top: '75%'} :
+              ( b.betClass === 'split' ) ? {left: '50%', top: '100%'} :
+              {left: '50%', top: '50%'}
+              ;
+              return <div className={`chip ${b.chip}`} style={style}> </div>
+            })
+          : ''
+      }
     {children}
     </div>;
 }
@@ -451,8 +481,7 @@ function App() {
     ( betType === 'corner' ) ? 8 :
     ( betType === 'dbStreet' ) ? 5 :
     ( betType === 'street' || betType === 'trio' ) ? 11 :
-    ( betType === 'topLine' ) ? 6 : 0
-    ;
+    ( betType === 'topLine' ) ? 6 : 0;
     let affectedNumbers: any[] = [];
     const getNum = (num: any) => num.match(/\d+/)[0];
     const exNum = (returnNum?: boolean) => (returnNum) ? Number(getNum(targetId)) : getNum(targetId)[0];

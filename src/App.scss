@@ -47,6 +47,9 @@ $dozensW: $mainFrame / 3;
     box-sizing: border-box;
     > *{
         float: right;
+        *{
+            position: relative;
+        }
     }
     button{
         background: none;
@@ -184,7 +187,7 @@ $dozensW: $mainFrame / 3;
             > .straight:hover::after{
                 opacity: $hoverOpacity;
             }
-            > *:not(.straight){
+            > *:not(.straight, .chip){
                 position: absolute;
                 background: #fff;
             }
@@ -379,6 +382,11 @@ $dozensW: $mainFrame / 3;
         }
         @include diamondButton;
     }
+    .chip{
+        position: absolute;
+        z-index: 10;
+        transform: translate(-50%, -50%);
+    }
 }
 
 #betBoard{
@@ -470,40 +478,6 @@ $dozensW: $mainFrame / 3;
                     box-sizing: border-box;
                     padding: 12.5px;
                     transition: .1s all ease-in-out;
-                    .chip{
-                        width: 50px;
-                        height: 50px;
-                        border: none;
-                        background: transparent center no-repeat;
-                        background-size: contain;
-                    }
-                    .chip.c5{
-                        background-image: url('./Assets/c5.png');
-                    }
-                    .chip.c25{
-                        background-image: url('./Assets/c25.png');
-                    }
-                    .chip.c50{
-                        background-image: url('./Assets/c50.png');
-                    }
-                    .chip.c100{
-                        background-image: url('./Assets/c100.png');
-                    }
-                    .chip.c500{
-                        background-image: url('./Assets/c500.png');
-                    }
-                    .chip.c1000{
-                        background-image: url('./Assets/c1000.png');
-                    }
-                    .chip.c5000{
-                        background-image: url('./Assets/c5000.png');
-                    }
-                    .chip.c10000{
-                        background-image: url('./Assets/c10000.png');
-                    }
-                    .chip:hover{
-                        cursor: pointer;
-                    }
                     .amount{
                         margin-top: .25em;
                         font-size: 1.1em;
@@ -518,4 +492,38 @@ $dozensW: $mainFrame / 3;
             }
         }
     }
+}
+.chip{
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: transparent center no-repeat;
+    background-size: contain;
+}
+.chip.c5{
+    background-image: url('./Assets/c5.png');
+}
+.chip.c25{
+    background-image: url('./Assets/c25.png');
+}
+.chip.c50{
+    background-image: url('./Assets/c50.png');
+}
+.chip.c100{
+    background-image: url('./Assets/c100.png');
+}
+.chip.c500{
+    background-image: url('./Assets/c500.png');
+}
+.chip.c1000{
+    background-image: url('./Assets/c1000.png');
+}
+.chip.c5000{
+    background-image: url('./Assets/c5000.png');
+}
+.chip.c10000{
+    background-image: url('./Assets/c10000.png');
+}
+.chip:hover{
+    cursor: pointer;
 }

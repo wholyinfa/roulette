@@ -12,6 +12,9 @@
 #rouletteTable > * {
   float: right;
 }
+#rouletteTable > * * {
+  position: relative;
+}
 #rouletteTable button {
   background: none;
   border: none;
@@ -141,7 +144,7 @@
 #rouletteTable #inside .row > * > .straight:hover::after {
   opacity: 0.3;
 }
-#rouletteTable #inside .row > * > *:not(.straight) {
+#rouletteTable #inside .row > * > *:not(.straight, .chip) {
   position: absolute;
   background: #fff;
 }
@@ -372,6 +375,11 @@
 #rouletteTable #outsideBottom .diamondButton:hover::after {
   opacity: 0.3;
 }
+#rouletteTable .chip {
+  position: absolute;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
 
 #betBoard {
   width: 1165px;
@@ -464,44 +472,54 @@
   padding: 12.5px;
   transition: 0.1s all ease-in-out;
 }
-#betBoard #betConsole #chipSection #chips .chipContainer .chip {
-  width: 50px;
-  height: 50px;
-  border: none;
-  background: transparent center no-repeat;
-  background-size: contain;
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c5 {
-  background-image: url("./Assets/c5.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c25 {
-  background-image: url("./Assets/c25.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c50 {
-  background-image: url("./Assets/c50.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c100 {
-  background-image: url("./Assets/c100.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c500 {
-  background-image: url("./Assets/c500.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c1000 {
-  background-image: url("./Assets/c1000.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c5000 {
-  background-image: url("./Assets/c5000.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip.c10000 {
-  background-image: url("./Assets/c10000.png");
-}
-#betBoard #betConsole #chipSection #chips .chipContainer .chip:hover {
-  cursor: pointer;
-}
 #betBoard #betConsole #chipSection #chips .chipContainer .amount {
   margin-top: 0.25em;
   font-size: 1.1em;
 }
 #betBoard #betConsole #chipSection #chips .chipContainer.fade {
   opacity: 0.3;
+}
+
+.chip {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: transparent center no-repeat;
+  background-size: contain;
+}
+
+.chip.c5 {
+  background-image: url("./Assets/c5.png");
+}
+
+.chip.c25 {
+  background-image: url("./Assets/c25.png");
+}
+
+.chip.c50 {
+  background-image: url("./Assets/c50.png");
+}
+
+.chip.c100 {
+  background-image: url("./Assets/c100.png");
+}
+
+.chip.c500 {
+  background-image: url("./Assets/c500.png");
+}
+
+.chip.c1000 {
+  background-image: url("./Assets/c1000.png");
+}
+
+.chip.c5000 {
+  background-image: url("./Assets/c5000.png");
+}
+
+.chip.c10000 {
+  background-image: url("./Assets/c10000.png");
+}
+
+.chip:hover {
+  cursor: pointer;
 }/*# sourceMappingURL=App.css.map */
