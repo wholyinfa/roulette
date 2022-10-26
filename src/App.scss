@@ -389,6 +389,77 @@ $dozensW: $mainFrame / 3;
     }
 }
 
+@mixin charcoalButton {
+    .card{
+        border-radius: 10px;
+        -webkit-box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4); 
+        box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4);
+        background: rgb(11,43,34);
+        background: linear-gradient(45deg, rgba(230,81,0,1) 0%, rgba(0,0,0,1) 100%);
+    }
+    .charcoalButton{
+        text-decoration: none;
+        color: #fff;
+        padding: 12px 24px;
+        font-size: 20px;
+        border: 0;
+        border-radius: 5px;
+        display: inline-block;
+        transition: transform .1s ease-in-out;
+        transform-origin: bottom center;
+    }
+    .charcoalButton:hover{
+        cursor: pointer;
+        transform: scale(.9);
+    }
+}
+#daWheel{
+    width: 445px;
+    height: 445px;
+    position: relative;
+    margin: 50px auto;
+    @include charcoalButton;
+    img{
+        display: none;
+    }
+    .charcoalButton{
+        $w: 100px;
+        width: $w;
+        height: $w;
+        border-radius: $w;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: center center;
+    }
+    .charcoalButton:hover{
+        cursor: pointer;
+        transform: translate(-50%, -50%) scale(.9);
+    }
+    .notice{
+        position: absolute;
+        padding: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        color: #fff;
+        text-align: center;
+    }
+    .number{
+        $w: 150px;
+        width: $w;
+        height: $w;
+        border-radius: $w;
+        line-height: $w;
+        font-size: 6em;
+    }
+    .number:hover{
+        cursor: default;
+        transform: translate(-50%, -50%);
+    }
+}
 #betBoard{
     width: $tableW;
     margin: 50px auto;
@@ -420,28 +491,7 @@ $dozensW: $mainFrame / 3;
             display: block;
             margin: .5em auto;
         }
-        .card{
-            border-radius: 10px;
-            -webkit-box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4); 
-            box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.4);
-            background: rgb(11,43,34);
-            background: linear-gradient(45deg, rgba(11,43,34,1) 0%, rgba(43,189,150,1) 100%);
-        }
-        .charcoalButton{
-            text-decoration: none;
-            color: #fff;
-            padding: 12px 24px;
-            font-size: 20px;
-            border: 0;
-            border-radius: 5px;
-            display: inline-block;
-            transition: transform .1s ease-in-out;
-            transform-origin: bottom center;
-        }
-        .charcoalButton:hover{
-            cursor: pointer;
-            transform: scale(.9);
-        }
+        @include charcoalButton;
     }
     $betConsoleW: 200px;
     #betConsole{
@@ -491,6 +541,25 @@ $dozensW: $mainFrame / 3;
                 }
             }
         }
+    }
+    #gameOver{
+        color: #fff;
+        padding: 25px;
+        box-sizing: border-box;
+        background: linear-gradient(45deg, rgba(112,18,18,1) 0%, rgba(0,0,0,1) 100%);
+        border-radius: 10px;
+    }
+    #reward{
+        width: 100%;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        #congrats{
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        @include charcoalButton;
     }
 }
 .chip{

@@ -381,6 +381,72 @@
   transform: translate(-50%, -50%);
 }
 
+#daWheel {
+  width: 445px;
+  height: 445px;
+  position: relative;
+  margin: 50px auto;
+}
+#daWheel .card {
+  border-radius: 10px;
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.4);
+  background: rgb(11, 43, 34);
+  background: linear-gradient(45deg, rgb(230, 81, 0) 0%, rgb(0, 0, 0) 100%);
+}
+#daWheel .charcoalButton {
+  text-decoration: none;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 5px;
+  display: inline-block;
+  transition: transform 0.1s ease-in-out;
+  transform-origin: bottom center;
+}
+#daWheel .charcoalButton:hover {
+  cursor: pointer;
+  transform: scale(0.9);
+}
+#daWheel img {
+  display: none;
+}
+#daWheel .charcoalButton {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+}
+#daWheel .charcoalButton:hover {
+  cursor: pointer;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+#daWheel .notice {
+  position: absolute;
+  padding: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+  color: #fff;
+  text-align: center;
+}
+#daWheel .number {
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  line-height: 150px;
+  font-size: 6em;
+}
+#daWheel .number:hover {
+  cursor: default;
+  transform: translate(-50%, -50%);
+}
+
 #betBoard {
   width: 1165px;
   margin: 50px auto;
@@ -418,7 +484,7 @@
   border-radius: 10px;
   box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.4);
   background: rgb(11, 43, 34);
-  background: linear-gradient(45deg, rgb(11, 43, 34) 0%, rgb(43, 189, 150) 100%);
+  background: linear-gradient(45deg, rgb(230, 81, 0) 0%, rgb(0, 0, 0) 100%);
 }
 #betBoard #buyInConsole .charcoalButton {
   text-decoration: none;
@@ -478,6 +544,45 @@
 }
 #betBoard #betConsole #chipSection #chips .chipContainer.fade {
   opacity: 0.3;
+}
+#betBoard #gameOver {
+  color: #fff;
+  padding: 25px;
+  box-sizing: border-box;
+  background: linear-gradient(45deg, rgb(112, 18, 18) 0%, rgb(0, 0, 0) 100%);
+  border-radius: 10px;
+}
+#betBoard #reward {
+  width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#betBoard #reward #congrats {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+#betBoard #reward .card {
+  border-radius: 10px;
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.4);
+  background: rgb(11, 43, 34);
+  background: linear-gradient(45deg, rgb(230, 81, 0) 0%, rgb(0, 0, 0) 100%);
+}
+#betBoard #reward .charcoalButton {
+  text-decoration: none;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 5px;
+  display: inline-block;
+  transition: transform 0.1s ease-in-out;
+  transform-origin: bottom center;
+}
+#betBoard #reward .charcoalButton:hover {
+  cursor: pointer;
+  transform: scale(0.9);
 }
 
 .chip {

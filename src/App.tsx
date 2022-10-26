@@ -28,6 +28,7 @@ interface Bet {
   betCount: number,
   affectedNumbers: number[] | string[]
 } 
+const currency = '€';
 function BetButton({children, id, activeBet, removeBet}: InferProps<typeof BetButton.propTypes>){
   const bets = activeBet.filter( c => c.id === id);
   
@@ -281,25 +282,48 @@ interface chips{
   c5000: number,
   c10000: number,
 }
-function BetBoard({children, totalMoney, setTotalMoney, calculateChips, activeChip}: InferProps<typeof BetBoard.propTypes>) {
+const maxAmount = 100000;
+const minAmount = 100;
+function BuyInConsole({addDots, totalMoney, handleSubmit, handleChange}: InferProps<typeof BuyInConsole.propTypes>){
+  return <div id='buyInConsole'>
+  <h2>HOW MUCH DO YOU WANT TO BUY IN?</h2>
+  <div id='minNotice'>MIN: {addDots(minAmount)+currency}</div>
+  <div id='maxNotice'>MAX: {addDots(maxAmount)+currency}</div>
+  <input type='text ' name='totalAmount' value={totalMoney} onChange={ (e) => handleChange(e)} />
+  <button className='card charcoalButton' onClick={handleSubmit}>PLAY!</button>
+</div>;
+}
+BuyInConsole.propTypes = {
+  addDots: PropTypes.func.isRequired,
+  totalMoney: PropTypes.number.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+}
 
-  const maxAmount = 100000;
-  const minAmount = 100;
-  function addDots(num: number){
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
+function BetBoard({totalMoney, setTotalMoney, calculateChips, activeChip, reward, handleReward, gameOver, setGameOver}: InferProps<typeof BetBoard.propTypes>) {
 
+  const addDots = (num: number) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  
+
+  const [tempTotal, setTempTotal] = useState<number>(0);
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const value = ( target.value === '' ) ? '' : target.value.match(/[0-9]/g)?.join('');
     console.log(value);
     if(
       ( value || value === '' ) &&
       Number(value) <= maxAmount
-    ) setTotalMoney(value);
+    ) setTempTotal(Number(value));
   }
-  const [boughtIn, setBoughtIn] = useState<boolean>(true);
+  const [boughtIn, setBoughtIn] = useState<boolean>(false);
   const handleSubmit = () => {
-    if( totalMoney >= minAmount ) setBoughtIn(true);
+    if( tempTotal >= minAmount ) {
+      setTotalMoney(tempTotal);
+      setTempTotal(0);
+      setBoughtIn(true);
+      setGameOver(false);
+      if( reward === 0 ) handleReward();
+    }
     else document.querySelector('#minNotice')?.classList.add('active');
   }
 
@@ -328,47 +352,85 @@ function BetBoard({children, totalMoney, setTotalMoney, calculateChips, activeCh
   return <div id='betBoard'>
     
     {
-      boughtIn ?
+      boughtIn && !gameOver ?
         <div id='betConsole'>
           <h2 id='amountSection'>
             <div>AMOUNT LEFT:</div>
-            <div>{addDots(totalMoney)} €</div>
+            <div>{addDots(totalMoney)+currency}</div>
           </h2>
           <div id='chipSection'>
-            <div id='chips'>
-              {
-                Object.entries(chips).map( ([key, value], i) => {
-                  if( value )
-                  return <div key={i} className='chipContainer'>
-                    <button onClick={(e) => handleClick(e)} className={`chip ${key}`}>
-
-                    </button>
-                    <div className='amount'>
-                      {value}
-                    </div>
-                  </div>;
-                })
-              }
-            </div>
+            {
+              reward === null ?
+              <div id='chips'>
+                {
+                  Object.entries(chips).map( ([key, value], i) => {
+                    if( value )
+                    return <div key={i} className='chipContainer'>
+                      <button onClick={(e) => handleClick(e)} className={`chip ${key}`}>
+  
+                      </button>
+                      <div className='amount'>
+                        {value}
+                      </div>
+                    </div>;
+                  })
+                }
+              </div>
+              : <div id='reward'>
+                  <div id='congrats'>
+                    { 
+                      reward === 0 ?
+                        'OH NO:( YOU LOST! BETTER LUCK NEXT TIME:)'
+                      :
+                        `CONGRATULATIONS!!! YOU WON ${reward+currency}`
+                    }
+                  </div>
+                  <button className='card charcoalButton' onClick={handleReward} id='collect'>
+                    { 
+                      reward === 0 ?
+                        'CONTINUE'
+                      :
+                        `COLLECT!`
+                    }
+                  </button>
+              </div>
+            }
           </div>
-        </div> :
-        <div id='buyInConsole'>
-          <h2>HOW MUCH DO YOU WANT TO BUY IN?</h2>
-          <div id='minNotice'>MIN: {addDots(minAmount)} €</div>
-          <div id='maxNotice'>MAX: {addDots(maxAmount)} €</div>
-          <input type='text ' name='totalAmount' value={totalMoney} onChange={ (e) => handleChange(e)} />
-          <button className='card charcoalButton' onClick={handleSubmit}>PLAY!</button>
         </div>
+      : boughtIn && gameOver ?
+        <>
+          <div id='gameOver'>
+            <h2>GAME OVER!</h2>
+            <h3>YOU'VE SUCCESSFULLY MADE OUR CASINO RICHER. THANK YOU!</h3>
+          </div>
+          <BuyInConsole
+            addDots={addDots}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            totalMoney={tempTotal}
+          />
+        </>
+      :
+        <BuyInConsole
+          addDots={addDots}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          totalMoney={tempTotal}
+        />
     }
     
   </div>
 }
 BetBoard.propTypes = {
   children: PropTypes.any,
-  totalMoney: PropTypes.any.isRequired,
+  totalMoney: PropTypes.number.isRequired,
   setTotalMoney: PropTypes.func.isRequired,
   calculateChips: PropTypes.func.isRequired,
   activeChip: PropTypes.any.isRequired,
+  reward: PropTypes.any,
+  handleReward: PropTypes.func.isRequired,
+  gameOver: PropTypes.bool.isRequired,
+  setGameOver: PropTypes.func.isRequired,
 }
 
 function App() {
@@ -421,14 +483,20 @@ function App() {
 
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
+  const [reward, setReward] = useState<number | null>(null);
 
+  const allowPlay = useRef<boolean>(true);
   const handleSpinClick = () => {
     if ( mustSpin !== false ) return;
     const newPrizeNumber = Math.floor(Math.random() * data.length)
     setPrizeNumber(newPrizeNumber)
     setMustSpin(true);
+    
+    allowPlay.current = false; 
   }
   const [betColor, setBetColor] = useState<betColor | null>(null);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+  const getNum = (num: any) => num.match(/\d+/)[0];
   const handleStop = () => {
     setMustSpin(false);
 
@@ -439,6 +507,21 @@ function App() {
         setBetColor('red');
     }else
       setBetColor('green');
+
+      let reward = 0;
+      activeBet.current.map( b => {
+        b.affectedNumbers.map( n => {
+          if( n === prizeNumber ){
+            reward += b.betCount * Number(getNum(b.chip));
+            reward += b.score * b.betCount * Number(getNum(b.chip));
+          }
+        })
+      });
+
+      if( reward === 0 && totalMoney === 0 )
+      setGameOver(true);
+
+      setReward(reward);
   }
 
   const idNumbers: idNumbers[] = data.map( (n , i) => ({
@@ -484,10 +567,9 @@ function App() {
     affectedNumbers: number[] | string[]
   } 
   const activeBet = useRef<Bet[]>([]);
-  const getNum = (num: any) => num.match(/\d+/)[0];
   const handleBet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, betType: betTypes) => {
+    if ( activeChip.current === null || !allowPlay.current ) return;
     const chips = calculateChips();
-    if ( activeChip.current === null ) return;
     const chipType = Array.from(activeChip.current.classList).filter( c => c.match(/(c[0-9]+)/g))[0];
     if ( chips[chipType as keyof chips] === 0 ) return;
     if ( chips[chipType as keyof chips] === 1 ) {
@@ -601,6 +683,7 @@ function App() {
   }
 
   const removeBet = (i: number) => {
+    if( !allowPlay.current ) return;
     let targetBet = activeBet.current[i];
     if( targetBet.betCount === 1 )
       targetBet = activeBet.current.splice(i, 1)[0];
@@ -610,24 +693,46 @@ function App() {
     setTotalMoney(totalMoney + Number(getNum(targetBet.chip)));
   }
 
+  const handleReward = () => {
+    if( reward !== null && reward > 0 )
+      setTotalMoney( totalMoney + reward )
+    setReward(null);
+    allowPlay.current = true;
+    activeBet.current = [];
+  }
+
   return <>
+      <div id='daWheel'>
        <Wheel 
         mustStartSpinning={mustSpin}
         prizeNumber={prizeNumber}
         spinDuration={0.01}
         data={data}
         backgroundColors={[colors.black, colors.red]}
-        textColors={['#ffffff']}
+        textColors={['#fff']}
         perpendicularText={true}
         textDistance={90}
         outerBorderWidth={5}
-        outerBorderColor={colors.gold}
-        innerRadius={82}
+        outerBorderColor={'#fff'}
+        innerBorderWidth={5}
+        innerBorderColor={'#fff'}
+        innerRadius={80}
         onStopSpinning={handleStop}
       />
-      <button onClick={handleSpinClick}>
-        SPIN
-      </button>
+      {
+      activeBet.current.length && reward === null ?
+        <button className='card charcoalButton' onClick={handleSpinClick}>
+          SPIN!
+        </button>
+      : reward !== null ?
+        <div className='card charcoalButton notice number'>
+          {prizeNumber}
+        </div>
+      : <div className='notice'>
+        PLACE YOUR BET!
+        </div>}
+      
+      </div>
       <Table
         numbers={tableNumbers}
         handleBet={handleBet}
@@ -639,6 +744,10 @@ function App() {
         setTotalMoney={setTotalMoney}
         calculateChips={calculateChips}
         activeChip={activeChip}
+        reward={reward}
+        handleReward={handleReward}
+        gameOver={gameOver}
+        setGameOver={setGameOver}
       />
     </>;
 }
