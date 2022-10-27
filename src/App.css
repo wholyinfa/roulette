@@ -137,7 +137,6 @@
   background-color: transparent;
 }
 #rouletteTable #zeros #N0.indicator > .straight, #rouletteTable #zeros #N00.indicator > .straight {
-  background-color: rgb(255, 255, 255);
   -webkit-animation: zeroBlinker 0.8s linear infinite;
           animation: zeroBlinker 0.8s linear infinite;
 }

@@ -171,7 +171,6 @@ $dozensW: $boxD * 4;
         #N0.indicator, #N00.indicator{
             background-color: transparent;
             > .straight{
-                background-color: rgba(255, 255, 255, 1);
                 animation: zeroBlinker .8s linear infinite;
             }
             @keyframes zeroBlinker {

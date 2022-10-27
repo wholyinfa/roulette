@@ -497,31 +497,23 @@ function App() {
     activeChip.current = null;
     allowPlay.current = false; 
   }
-  const [betColor, setBetColor] = useState<betColor | null>(null);
   const [gameOver, setGameOver] = useState<boolean>(false);
-  const getNum = (num: any) => num.match(/\d+/)[0];
+  const getNum = (num: any) => num.match(/\d+/).join('');
   const handleStop = () => {
     setMustSpin(false);
-
-    if( typeof prizeNumber === 'number' ){
-      if( prizeNumber % 2 === 0 )
-        setBetColor('black');
-      else
-        setBetColor('red');
-    }else
-      setBetColor('green');
 
       let reward = 0;
       let winnerBets: Bet[] = [];
       activeBet.current.map( b => {
         b.affectedNumbers.map( n => {
-          if( n === prizeNumber ){
+          if( n == prizeNumber ){
             reward += b.betCount * Number(getNum(b.chip));
             reward += b.score * b.betCount * Number(getNum(b.chip));
             winnerBets.push(b);
           }
         })
       });
+      
       document.getElementById(`N${prizeNumber}`)?.classList.add('mainIndicator');
       
       winnerBets.length && winnerBets.map( b => {
@@ -619,7 +611,7 @@ function App() {
     ( betType === 'street' || betType === 'trio' ) ? 11 :
     ( betType === 'topLine' ) ? 6 : 0;
     let affectedNumbers: any[] = [];
-    const exNum = (returnNum?: boolean) => (returnNum) ? Number(getNum(targetId)) : getNum(targetId)[0];
+    const exNum = (returnNum?: boolean) => (returnNum) ? Number(getNum(targetId)) : getNum(targetId);
     if( betType === 'straight' )
       affectedNumbers.push(
         exNum(exNum() !== '0' && exNum() !== '00')
@@ -732,6 +724,7 @@ function App() {
       <div id='daWheel'>
        <Wheel 
         mustStartSpinning={mustSpin}
+        spinDuration={.01}
         prizeNumber={data.findIndex( n => n.option === prizeNumber)}
         data={data}
         backgroundColors={[colors.black, colors.red]}
