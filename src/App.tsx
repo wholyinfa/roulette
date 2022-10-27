@@ -29,6 +29,52 @@ interface Bet {
   affectedNumbers: number[] | string[]
 } 
 const currency = '€';
+const data : Array<WheelData> = [
+  { option: '28' },
+  { option: '9' },
+  { option: '26' },
+  { option: '30' },
+  { option: '11' },
+  { option: '7' },
+  { option: '20' },
+  { option: '32' },
+  { option: '17' },
+  { option: '5' },
+  { option: '22' },
+  { option: '34' },
+  { option: '15' },
+  { option: '3' },
+  { option: '24' },
+  { option: '36' },
+  { option: '13' },
+  { option: '1' },
+  { option: '00',
+    style: {
+      backgroundColor: colors.green
+    }},
+  { option: '27' },
+  { option: '10' },
+  { option: '25' },
+  { option: '29' },
+  { option: '12' },
+  { option: '8' },
+  { option: '19' },
+  { option: '31' },
+  { option: '18' },
+  { option: '6' },
+  { option: '21' },
+  { option: '33' },
+  { option: '16' },
+  { option: '4' },
+  { option: '23' },
+  { option: '35' },
+  { option: '14' },
+  { option: '2' },
+  { option: '0',
+  style: {
+    backgroundColor: colors.green
+  }},
+];
 function BetButton({children, id, activeBet, removeBet}: InferProps<typeof BetButton.propTypes>){
   const bets = activeBet.filter( c => c.id === id);
   
@@ -436,62 +482,16 @@ BetBoard.propTypes = {
 }
 
 function App() {
-  const data : Array<WheelData> = [
-    { option: '28' },
-    { option: '9' },
-    { option: '26' },
-    { option: '30' },
-    { option: '11' },
-    { option: '7' },
-    { option: '20' },
-    { option: '32' },
-    { option: '17' },
-    { option: '5' },
-    { option: '22' },
-    { option: '34' },
-    { option: '15' },
-    { option: '3' },
-    { option: '24' },
-    { option: '36' },
-    { option: '13' },
-    { option: '1' },
-    { option: '00',
-      style: {
-        backgroundColor: colors.green
-      }},
-    { option: '27' },
-    { option: '10' },
-    { option: '25' },
-    { option: '29' },
-    { option: '12' },
-    { option: '8' },
-    { option: '19' },
-    { option: '31' },
-    { option: '18' },
-    { option: '6' },
-    { option: '21' },
-    { option: '33' },
-    { option: '16' },
-    { option: '4' },
-    { option: '23' },
-    { option: '35' },
-    { option: '14' },
-    { option: '2' },
-    { option: '0',
-    style: {
-      backgroundColor: colors.green
-    }},
-  ];
 
   const [mustSpin, setMustSpin] = useState(false);
-  const [prizeNumber, setPrizeNumber] = useState(0);
+  const [prizeNumber, setPrizeNumber] = useState<number | string>(23);
   const [reward, setReward] = useState<number | null>(null);
 
   const allowPlay = useRef<boolean>(true);
   const handleSpinClick = () => {
     if ( mustSpin !== false ) return;
-    const newPrizeNumber = Math.floor(Math.random() * data.length)
-    setPrizeNumber(newPrizeNumber)
+    const newPrizeNumber = Math.floor(Math.random() * data.length);
+    setPrizeNumber(data[newPrizeNumber].option);
     setMustSpin(true);
     
     activeChip.current = null;
@@ -503,7 +503,7 @@ function App() {
   const handleStop = () => {
     setMustSpin(false);
 
-    if( Number(data[prizeNumber].option) !== 0 ){
+    if( typeof prizeNumber === 'number' ){
       if( prizeNumber % 2 === 0 )
         setBetColor('black');
       else
@@ -732,8 +732,7 @@ function App() {
       <div id='daWheel'>
        <Wheel 
         mustStartSpinning={mustSpin}
-        prizeNumber={prizeNumber}
-        spinDuration={0.01}
+        prizeNumber={data.findIndex( n => n.option === prizeNumber)}
         data={data}
         backgroundColors={[colors.black, colors.red]}
         textColors={['#fff']}
@@ -743,6 +742,7 @@ function App() {
         outerBorderColor={'#fff'}
         innerBorderWidth={5}
         innerBorderColor={'#fff'}
+        radiusLineColor={'#fff'}
         innerRadius={80}
         onStopSpinning={handleStop}
       />
